@@ -26,7 +26,7 @@ SECRET_KEY = '=v!!7kzonkv=9#c-6mpusl^7d%3hz)x0l^9!u%0g^_lzpujaz7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://gamebyte.herokuapp.com/','127.0.0.1']
+ALLOWED_HOSTS = ['gamebyte.herokuapp.com','127.0.0.1']
 
 
 # Application definition
