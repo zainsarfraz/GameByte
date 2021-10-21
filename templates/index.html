@@ -1,14 +1,19 @@
+{% extends "base.html" %}
+{% block body %}
 {% load socialaccount %}
-<html>
-<body>
-<h1>My Google OAuth Project </h1>
+
+<div  style="text-align: center;">
+  <br>
+<h1>Google Oauth Testing</h1>
 {% if user.is_authenticated %}
-  <p>Welcome, You are logged in as {{ user.username }}</p>
+  <p>Welcome, You are logged in as <b>{{ user.first_name }} {{user.last_name}}</b></p>
   <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
   <br>
-  <a href="/logout">Logout</a>
+  <br>
+  <a href="/logout" class="btn btn-sm btn-danger">Logout</a>
 {% else %}
-  <a href="{% provider_login_url 'google' %}">Login With Google</a>
+  <a href="{% provider_login_url 'google' %}" class="btn btn-sm btn-success">Login With Google</a>
 {% endif %}
-</body>
-</html>
+</div>
+
+{% endblock %}
