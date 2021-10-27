@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'main',
     # oauth
     'django.contrib.sites',
     'oauth',
@@ -150,6 +151,9 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
+MEDIA_URL = '/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
 # oauth
 
 AUTHENTICATION_BACKENDS = [
@@ -171,5 +175,5 @@ SOCIALACCOUNT_PROVIDERS = {
 
 SITE_ID = 2
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/checkUser'
 LOGOUT_REDIRECT_URL = '/'

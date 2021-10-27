@@ -18,11 +18,10 @@ from django.urls import path
 from django.urls import path, include
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LogoutView
-from .views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', googleAuthTest,name='googleAuthTest'),
     path('accounts/', include('allauth.urls')),
+    path('',include('main.urls')),
     path('logout', LogoutView.as_view()),
 ]
