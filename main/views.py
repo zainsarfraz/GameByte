@@ -1,3 +1,4 @@
+from urllib import request
 from django.db.models.fields.files import ImageField
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
@@ -9,7 +10,7 @@ from django.core.files.images import ImageFile
 
 def googleAuthTest(request):
     print(request.user)
-    return render(request,'index.html')
+    return render(request,'googleauthtest.html')
 
 def checkUser(request):
     if UserDetails.objects.filter(user_id=request.user.id).exists():
@@ -22,4 +23,7 @@ def checkUser(request):
         # userDetails.profile_pic = ImageFile(open("media/google/"+str(imageName)+".jpg","rb"))
         userDetails.save()
 
-    return redirect('/')
+    return redirect('/googleAuth')
+
+def landingPage(request):
+    return render(request,'landing_page.html')

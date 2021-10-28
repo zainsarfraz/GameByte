@@ -7,6 +7,7 @@ from django.contrib.auth.views import LogoutView
 from .views import *
 
 urlpatterns = [
-    path('', googleAuthTest,name='googleAuthTest'),
+    path('',landingPage,name='landingpage'),
+    path('googleAuth', googleAuthTest,name='googleAuthTest'),
     path('checkUser',checkUser,name='checkUser'),
 ]
