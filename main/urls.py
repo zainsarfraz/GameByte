@@ -10,4 +10,9 @@ urlpatterns = [
     path('',landingPage,name='landingpage'),
     path('googleAuth', googleAuthTest,name='googleAuthTest'),
     path('checkUser',checkUser,name='checkUser'),
+    path('register',register,name='register'),
+    path('playground',playground,name='playground'),
+    path('dashboard',dashboard,name='dashboard'),
+    path('problems',problems,name='problems'),
+    path('profile',user_profile,name='profile'),
 ]
