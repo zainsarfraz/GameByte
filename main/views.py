@@ -29,7 +29,7 @@ def checkUser(request):
         # userDetails.profile_pic = ImageFile(open("media/google/"+str(imageName)+".jpg","rb"))
         userDetails.save()
 
-    return redirect('/googleAuth')
+    return redirect('/profile')
 
 def landingPage(request):
     return render(request,'landing_page.html')
@@ -52,6 +52,35 @@ def register(request):
     #     return render(request,"registration/signup.html", {
     #         'form': form,
     #     })
+    if request.method == 'POST':
+        usernmae = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password1']
+        password2 = request.POST['password2']
+        first_name = request.POST['fname']
+        last_name = request.POST['lname']
+        print(usernmae,email,password,password2,first_name,last_name)
+        if password == password2:
+            if User.objects.filter(username=usernmae).exists():
+                messages.info(request, "Username already exists.")
+                print("Username already exists.")
+                return render(request,'registration/signup.html',{'error':'Username already exists.'})
+            elif User.objects.filter(email=email).exists():
+                messages.info(request, "Email already exists.")
+                print("Email already exists.")
+                return render(request,'registration/signup.html',{'error':'Email already exists.'})
+            else:
+                user = User.objects.create_user(username=usernmae, password=password, email=email, first_name=first_name, last_name=last_name)
+                user.save()
+                messages.info(request, "Thanks for registering. You are now logged in.")
+                print("User created.")
+                user = authenticate(username=usernmae, password=password)
+                login(request, user)
+                return redirect('/checkUser')
+        else:
+            messages.info(request, "Password not matching.")
+            print("Password not matching.")
+            return render(request,'registration/signup.html',{'error':'Password not matching.'})
     return render(request,'registration/signup.html')
 
 

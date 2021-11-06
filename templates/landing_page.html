@@ -47,9 +47,9 @@
                   {% if user.is_authenticated %}
                   <a  href="/logout" class="nav-item nav-link btn btn-danger" style="background-color: red;" >LOG OUT</a>
                   {%  else %}
-                  <a  href="/googleAuth" class="nav-item nav-link btn btn-primary" >LOG IN</a>
+                  <a  href="/auth/login" class="nav-item nav-link btn btn-primary" >LOG IN</a>
                   <br>
-                  <a href="/googleAuth" class="nav-item nav-link btn btn-primary" style="margin-left: 5px;">SIGN UP</a>
+                  <a href="/register" class="nav-item nav-link btn btn-primary" style="margin-left: 5px;">SIGN UP</a>
                     {%endif%}
                 </div>
           </div>
@@ -66,7 +66,7 @@
               <div class="centered">
                   <h1><b>STEP UP YOUR CODING GAME</b></h1>
                   <h4 style="color: white;">The new way to improve your programming skills while having fun</h4>
-                  <a href="/googleAuth" class="btn btn-primary btn-lg text-light">GET STARTED</a>
+                  <a href="/auth/login" class="btn btn-primary btn-lg text-light">GET STARTED</a>
               </div>
           </div>
       </div>
