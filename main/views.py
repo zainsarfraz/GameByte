@@ -29,11 +29,28 @@ def checkUser(request):
         # userDetails.profile_pic = ImageFile(open("media/google/"+str(imageName)+".jpg","rb"))
         userDetails.save()
 
-    return redirect('/profile')
+    return redirect('/dashboard')
 
 def landingPage(request):
-    return render(request,'landing_page.html')
+    if not request.user.is_authenticated:
+        return render(request,'landing_page.html')
+    else:
+        return redirect('/dashboard')
 
+
+def check_email(request):
+    email = request.POST.get('email', None)
+    if User.objects.filter(email=email).exists():
+        return HttpResponse("true")
+    else:
+        return HttpResponse("false")
+
+def check_username(request):
+    username = request.POST.get('username', None)
+    if User.objects.filter(username=username).exists():
+        return HttpResponse("true")
+    else:
+        return HttpResponse("false")
 
 def register(request):
     # i will add the user myself and authenticate it
@@ -81,7 +98,11 @@ def register(request):
             messages.info(request, "Password not matching.")
             print("Password not matching.")
             return render(request,'registration/signup.html',{'error':'Password not matching.'})
-    return render(request,'registration/signup.html')
+    else:
+        if request.user.is_authenticated:
+            return redirect('/dashboard')
+        else:
+            return render(request,'registration/signup.html')
 
 
 def playground(request):

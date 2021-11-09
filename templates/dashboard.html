@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 
+{% block title %}
+GameByte
+{% endblock %}
+
 {% block body %}
 
     <h1>Dashboard</h1>
+    {{user.first_name}} {{user.last_name}}
 
 {% endblock %}

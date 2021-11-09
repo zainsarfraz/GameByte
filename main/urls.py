@@ -15,4 +15,6 @@ urlpatterns = [
     path('dashboard',dashboard,name='dashboard'),
     path('problems',problems,name='problems'),
     path('profile',user_profile,name='profile'),
+    path('check_email',check_email,name='check_email'),
+    path('check_username',check_username,name='check_username'),
 ]

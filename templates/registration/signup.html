@@ -22,7 +22,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'assets/css/LoginSignup.css' %}">
     <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 
-  
+ 
 </head>
 <body style="background-image: url('/static/assets/img/splash/login-bg.jfif');">
 
@@ -50,22 +50,32 @@
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="john.doe" name="username" required>
+                    <input type="text" class="form-control" id="usernameField" onblur="usernameCheck()" placeholder="john.doe" name="username" required>
                     <label for="floatingInput"><i class="fas fa-user-circle" aria-hidden="true" style="margin-right: 10px;"></i> Username</label>
-                </div>
+                    <div class="clearfix" id="loading2" style="display: none; margin-top: 10px;">
+                      <div class="spinner-border float-right text-warning" role="status">
+                        <span class="sr-only">Loading...</span>
+                      </div>
+                    </div>
+                  </div>
 
                 <div class="form-floating mb-3">
-                  <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" required>
+                  <input type="email" class="form-control" id="emailField" placeholder="name@example.com" name="email" onblur="emailCheck()" required>
                   <label for="floatingInput"><i class="fas fa-envelope" aria-hidden="true" style="margin-right: 10px;"></i> Email address</label>
+                  <div class="clearfix" id="loading" style="display: none; margin-top: 10px;">
+                    <div class="spinner-border float-right text-warning" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                  </div>
                 </div>
 
                 <div class="form-floating mb-3">
-                  <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password1" required>
+                  <input type="password" class="form-control" id="pass1" placeholder="Password" name="password1" required>
                   <label for="floatingPassword"><i class="fas fa-lock" style="margin-right: 10px;"></i> Password</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Repeat Password" name="password2" required>
+                    <input type="password" class="form-control" id="pass2" onkeyup="checkPass()" placeholder="Repeat Password" name="password2" required>
                     <label for="floatingPassword"><i class="fas fa-lock" style="margin-right: 10px;"></i>Repeat Password</label>
                   </div>
 
@@ -78,7 +88,9 @@
                   {% endif %} 
 
                 <div class="d-grid">
-                  <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" type="submit">Sign Up</button>
+                  <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" type="submit">Sign Up
+                    
+                  </button>
                 </div>
                 <br>
                 <div class="row">
@@ -112,5 +124,99 @@
     </div>
   </div>
 </div>
+<script>
+  function emailCheck() {
+    emailField = document.getElementById("emailField");
+    var email = document.getElementById("emailField").value;
+    console.log(email);
+    loading = document.getElementById("loading");
+    loading.style.display = "block";
+    $.ajax({
+      url: "{% url 'check_email' %}",
+      type: "POST",
+      data: {
+        email: email,
+        csrfmiddlewaretoken: '{{ csrf_token }}',
+      },
+      success: function(data) {
+        console.log(data);
+        loading.style.display = "none";
+        if (data == "true") {
+          document.getElementById("emailField").style.borderColor = "red";
+          document.getElementById("emailField").style.color = "red";
+          document.getElementById("emailField").style.borderWidth = "2px";
+          document.getElementById("emailField").style.borderStyle = "solid";
+          document.getElementById("emailField").style.borderRadius = "5px";
+          document.getElementById("emailField").style.boxShadow = "0 0 5px red";
+        } else {
+          document.getElementById("emailField").style.borderColor = "green";
+          document.getElementById("emailField").style.color = "green";
+          document.getElementById("emailField").style.borderWidth = "2px";
+          document.getElementById("emailField").style.borderStyle = "solid";
+          document.getElementById("emailField").style.borderRadius = "5px";
+          document.getElementById("emailField").style.boxShadow = "0 0 5px green";
+        }
+      }
+    });
+    
+  }
+  function usernameCheck() {
+    usernameField = document.getElementById("usernameField");
+    var username = document.getElementById("usernameField").value;
+    console.log(username);
+    loading = document.getElementById("loading2");
+    loading.style.display = "block";
+    $.ajax({
+      url: "{% url 'check_username' %}",
+      type: "POST",
+      data: {
+        username: username,
+        csrfmiddlewaretoken: '{{ csrf_token }}',
+      },
+      success: function(data) {
+        console.log(data);
+        loading.style.display = "none";
+        if(data == "true")
+        {
+          document.getElementById("usernameField").style.borderColor = "red";
+          document.getElementById("usernameField").style.color = "red";
+          document.getElementById("usernameField").style.borderWidth = "2px";
+          document.getElementById("usernameField").style.borderStyle = "solid";
+          document.getElementById("usernameField").style.borderRadius = "5px";
+          document.getElementById("usernameField").style.boxShadow = "0 0 5px red";
+        }
+        else
+        {
+          document.getElementById("usernameField").style.borderColor = "green";
+          document.getElementById("usernameField").style.color = "green";
+          document.getElementById("usernameField").style.borderWidth = "2px";
+          document.getElementById("usernameField").style.borderStyle = "solid";
+          document.getElementById("usernameField").style.borderRadius = "5px";
+          document.getElementById("usernameField").style.boxShadow = "0 0 5px green";
+        }
+      }
+    });
+  }
+  function passFocus() {
+    pass1 = document.getElementById("pass1");
+    pass1.addEventListener('input',checkPass);
+  }
+  function checkPass() {
+   
+    var pass1 = document.getElementById("pass1").value;
+    var pass2 = document.getElementById("pass2").value;
+    console.log(pass2);
+    if (pass1 != pass2) {
+      document.getElementById("pass2").style.borderColor = "red";
+      document.getElementById("pass2").style.color = "red";
+      document.getElementById("pass2").style.borderWidth = "2px";
+    } else {
+      document.getElementById("pass2").style.borderColor = "green";
+      document.getElementById("pass2").style.color = "green";
+      document.getElementById("pass2").style.borderWidth = "2px";
+    }
+  }
+  </script>
+    
 </body>
 </html>
