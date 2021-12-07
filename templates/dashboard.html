@@ -6,9 +6,12 @@ GameByte
 
 {% block body %}
 
-    <h1>Dashboard</h1>
+    
+    <div class="container">
+        <h1>Dashboard</h1>
     {{user.first_name}} {{user.last_name}}
     <br><br><br>
-    <a href="/playground" class="btn btn-warning">Solve Challenge</a>
+        <a class="btn btn-primary" href="problems">See All Problems</a>
+    </div>
 
 {% endblock %}

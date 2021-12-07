@@ -105,21 +105,28 @@ def register(request):
             return render(request,'registration/signup.html')
 
 
-def playground(request):
+def playground(request,id):
     if request.user.is_authenticated:
-        return render(request,'playground.html')
+        problem = Problem.objects.get(id=id)
+        f = open('templates/'+problem.templateSolutionCode,'r')
+        templateSolutionCode = f.read()
+        print(templateSolutionCode)
+        return render(request,'playground.html',{'problem':problem,'templateSolutionCode':templateSolutionCode})
     else:
         return redirect('/auth/login')
 
 def dashboard(request):
     if request.user.is_authenticated:
-        return render(request,'dashboard.html')
+        problems = Problem.objects.all()
+        return render(request,'dashboard.html',{'problems':problems})
+        
     else:
         return redirect('/auth/login')
 
 def problems(request):
     if request.user.is_authenticated:
-        return render(request,'problems.html')
+        problems = Problem.objects.all()
+        return render(request,'problems.html',{'problems':problems})
     else:
         return redirect('/auth/login')
 

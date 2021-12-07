@@ -5,7 +5,19 @@ GameByte - Problems
 {% endblock %}
 
 {% block body %}
-
+    <div class="container">
     <h1>All Problems</h1>
+    {% for problem in problems %}
 
+        <div class="row">
+            <div class="col-md-4">
+                <h4>{{problem.title}}</h4>
+            </div>
+            <div class="col-md-4">
+                <a href="playground/{{problem.id}}" class="btn btn-primary">Solve</a>
+            </div>
+        </div>
+        <hr>
+    {% endfor %}
+</div>
 {% endblock %}

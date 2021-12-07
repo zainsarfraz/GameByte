@@ -60,9 +60,11 @@ filter: blur(2px)
     <div class="col-md-6 col-sm-12 col-xs-12 container"style="background-color:#282c3c;color: white; ">
         <div class="row">
             <div class="col-12" style="padding: 10px;">
-                <canvas style="height: 300px; background-color: #111; width: 100%;">
-
-                </canvas>
+                <div style="height: 300px; background-color: #111; width: 100%;">
+                    {% block game %}
+                        {% include problem.problemGameFileName %}
+                    {% endblock %}
+                </div>
             </div>
         </div>
         <div class="row">
@@ -87,14 +89,13 @@ filter: blur(2px)
             <div class="col-12" style="padding: 10px;">
                 <section id=demo style="height: 400px;">
            
-                    <textarea  id=demotext autofocus style="color:white;" onEvent="nextField(this);" >
-                    </textarea>
+                    <textarea  id=demotext autofocus style="color:white;" onEvent="nextField(this);" >{{templateSolutionCode}}</textarea>
             </section>
             </div>
         </div>
         <div class="row">
             <div class="col-6" >
-                <button align="center" class="btn btn-warning">Run TestCases</button>
+                <button align="center" class="btn btn-warning" onclick="init()">Run TestCases</button>
             </div>
             <div class="col-6">
                 <button align="center" class="btn btn-success">Submit Code</button>

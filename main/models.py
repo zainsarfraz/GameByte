@@ -14,3 +14,17 @@ class UserDetails(models.Model):
 
     def __str__(self) -> str:
         return self.user_id.email
+
+
+class Problem(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.CharField(max_length=1000)
+    category = models.CharField(max_length=100)
+    difficulty = models.IntegerField(default=1)
+    templateSolutionCode = models.CharField(max_length=1000,default="")
+    solutionCode = models.CharField(max_length=10000,default="")
+    problemGameFileName = models.CharField(max_length=100)
+    
+    
+    def __str__(self) -> str:
+        return self.title
