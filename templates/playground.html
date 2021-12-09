@@ -55,10 +55,11 @@ filter: blur(2px)
 
 </style>		
 
-<div class="row " style="background-color:#181c24; height:100%; width: 100%; padding: 10px;">
-            
-    <div class="col-md-6 col-sm-12 col-xs-12 container"style="background-color:#282c3c;color: white; ">
+<div class="row " >
+    {% comment %} <div class="col-1"></div> {% endcomment %}
+    <div class="col-md-6 col-sm-12 col-xs-12 "style="background-color:#282c3c;color: white; ">
         <div class="row">
+           
             <div class="col-12" style="padding: 10px;">
                 <div style="height: 300px; background-color: #111; width: 100%;">
                     {% block game %}
@@ -69,14 +70,14 @@ filter: blur(2px)
         </div>
         <div class="row">
             <div class="col-12 vertical-scrollable " style="height: 200px;">
-                <h1 style="font-family:serif;color:#fcdf18;font-size: 30">Description
-                </h1>
-                <p style="font-family:serif;color:darkgrey;">Lorem ipsum dolor sit amet, exerci alienum gloriatur qui eu, vim ne tale invenire, ad ullum mundi expetenda vix. Prima mentitum partiendo vis ex, ut inermis consetetur dissentias eos, ei cibo nullam facete pro. Scripta necessitatibus usu id. Nec omnesque quaerendum et. Ut mutat prompta pro, et sapientem dignissim vis.In laboramus expetendis mei. Ius no autem indoctum, ex mea adipisci definitionem. No vis ferri prompta delectus, mel ei electram disputando omittantur. In purto adversarium mei. Et ferri dicit hendrerit eam, ut omnis insolens nominati sea, decore consequat vim no.Mea dictas voluptaria ei, velit fuisset suscipit et sit, at assentior signiferumque est. Vis in mazim ignota voluptatibus, ad mea error erroribus assentior. Dicunt scripserit eum ei. Quodsi eruditi no sed, essent alterum cu mea, vivendo mnesarchum reformidans et pri. Eum id summo appellantur vituperatoribus, ei quaeque scripserit duo. An eos oratio putent convenire, has mollis aperiam eu, sit ne nulla probatus. Ei eos altera verear ponderum, te eius viris mei.Lorem ipsum dolor sit amet, exerci alienum gloriatur qui eu, vim ne tale invenire, ad ullum mundi expetenda vix. Prima mentitum partiendo vis ex, ut inermis consetetur dissentias eos, ei cibo nullam facete pro. Scripta necessitatibus usu id. Nec omnesque quaerendum et. Ut mutat prompta pro, et sapientem dignissim vis.In laboramus expetendis mei. Ius no autem indoctum, ex mea adipisci definitionem. No vis ferri prompta delectus, mel ei electram disputando omittantur. In purto adversarium mei. Et ferri dicit hendrerit eam, ut omnis insolens nominati sea, decore consequat vim no.Mea dictas voluptaria ei, velit fuisset suscipit et sit, at assentior signiferumque est. Vis in mazim ignota voluptatibus, ad mea error erroribus assentior. Dicunt scripserit eum ei. Quodsi eruditi no sed, essent alterum cu mea, vivendo mnesarchum reformidans et pri. Eum id summo appellantur vituperatoribus, ei quaeque scripserit duo. An eos oratio putent convenire, has
+                <h3 style="font-family:serif;color:#fcdf18;font-size: 30">{{problem.title}}
+                </h3>
+                <p style="font-family:serif;color:darkgrey;">{{problem.description}}
                 </p>
             </div>
         </div>
         <div class="row">
-            <div class="col-12 container" style="background-color:#282c3c;color: darkgrey; font-family:monospace; height: 120px;">Console output 
+            <div class="col-12 " style="background-color:#282c3c;color: darkgrey; font-family:monospace; height: 120px;">Console output 
             </div>
 
         </div>
@@ -84,12 +85,12 @@ filter: blur(2px)
        
     </div>
    
-    <div class="col-md-6 col-sm-12 col-xs-12 container"style="background-color:#282c3c;color: white; ">
+    <div class="col-md-6 col-sm-12 col-xs-12 "style="background-color:#282c3c;color: white; ">
         <div class="row">
             <div class="col-12" style="padding: 10px;">
-                <section id=demo style="height: 400px;">
+                <section id="demo" style="height: 400px;">
            
-                    <textarea  id=demotext autofocus style="color:white;" onEvent="nextField(this);" >{{templateSolutionCode}}</textarea>
+                    <textarea  id="demotext" autofocus style="color:white;" onEvent="nextField(this);" >{{templateSolutionCode}}</textarea>
             </section>
             </div>
         </div>
@@ -100,13 +101,11 @@ filter: blur(2px)
             <div class="col-6">
                 <button align="center" class="btn btn-success">Submit Code</button>
             </div>
-        </div>
-        
-      
-           
-           
-       </div>
-       </div>
+        </div>    
+    </div>
+    {% comment %} <div class="col-1">
+    </div> {% endcomment %}
+</div>
 
 {% endblock %}
 
