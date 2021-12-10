@@ -17,7 +17,7 @@ GameByte - Playground
 .vertical-scrollable{
   
   overflow-y: scroll;
-  color: red; 
+  color: red;
 }
 .CodeMirror { 
     height: auto; 
@@ -41,6 +41,7 @@ GameByte - Playground
 }
 
 
+
 button:hover:before {
 opacity: 1
 }
@@ -50,14 +51,18 @@ background: none
 button:hover:active:before {
 filter: blur(2px)
 }
-
+@media (min-width: 1200px) {
+    .container{
+        max-width: 100%;
+    }
+}
 
 
 </style>		
 
 <div class="row " >
     {% comment %} <div class="col-1"></div> {% endcomment %}
-    <div class="col-md-6 col-sm-12 col-xs-12 "style="background-color:#282c3c;color: white; ">
+    <div class="col-md-6 col-sm-12 col-xs-12 "style="background-color:#131c25;color: white; ">
         <div class="row">
            
             <div class="col-12" style="padding: 10px;">
@@ -68,16 +73,17 @@ filter: blur(2px)
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12 vertical-scrollable " style="height: 200px;">
-                <h3 style="font-family:serif;color:#fcdf18;font-size: 30">{{problem.title}}
+        <div class="row" style="border: 1px solid darkgray">
+            <div class="col-12 vertical-scrollable " style="height: 200px; background-color: #252e38;padding: 20px">
+                <h3 style="font-family:Verdana;color:#fcdf18;font-size: 30px"><b style="font-weight: 900;" >{{problem.title}}</b>
                 </h3>
-                <p style="font-family:serif;color:darkgrey;">{{problem.description}}
+                <p style="font-family:Verdana;color:white;">{{problem.description}}
                 </p>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12 " style="background-color:#282c3c;color: darkgrey; font-family:monospace; height: 120px;">Console output 
+        <div class="row" style="border: 1px solid darkgray; margin-top: 10px; background-color: #252e38">
+            <div class="col-12 vertical-scrollable" style="background-color:#252e38;color: darkgrey; font-family:monospace; font-size: x-large;height: 50px;">
+                <b>Console Output:</b>
             </div>
 
         </div>
@@ -85,8 +91,8 @@ filter: blur(2px)
        
     </div>
    
-    <div class="col-md-6 col-sm-12 col-xs-12 "style="background-color:#282c3c;color: white; ">
-        <div class="row">
+    <div class="col-md-6 col-sm-12 col-xs-12 "style="background-color:#131c25;color: white;">
+        <div class="row" >
             <div class="col-12" style="padding: 10px;">
                 <section id="demo" style="height: 400px;">
            
@@ -94,12 +100,36 @@ filter: blur(2px)
             </section>
             </div>
         </div>
-        <div class="row">
-            <div class="col-6" >
-                <button align="center" class="btn btn-warning" onclick="init()">Run TestCases</button>
+        <div class="row" style="margin-top: 10px">
+            <div class="col-8" style="  height: 150px">
+                <div class="row">
+                    <div class="col-12">
+                        <h5 style="color: darkgray">Test cases</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <hr>
+                        <button align="center"  class="btn btn-lg btn-outline-warning" onclick="init()">
+                            PLAY TESTCASE
+                        </button>
+                        <hr>
+                    </div>
+                </div>
             </div>
-            <div class="col-6">
-                <button align="center" class="btn btn-success">Submit Code</button>
+            <div class="col-4 float-right" style=" height: 150px; ">
+                <div class="row">
+                    <div class="col-12">
+                        <h5 style="color: darkgray">Actions</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <hr>
+                        <button align="center" class="btn btn-lg btn-outline-primary">SUBMIT</button>
+                        <hr>
+                    </div>
+                </div>
             </div>
         </div>    
     </div>
