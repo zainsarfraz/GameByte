@@ -1,6 +1,7 @@
 from urllib import request
 from django.db.models.fields.files import ImageField
 from django.http import HttpResponse
+from django.http.response import JsonResponse
 from django.shortcuts import redirect, render,HttpResponseRedirect
 from django.template import RequestContext, Template
 from django.contrib import messages
@@ -110,7 +111,7 @@ def playground(request,id):
         problem = Problem.objects.get(id=id)
         f = open('templates/'+problem.templateSolutionCode,'r')
         templateSolutionCode = f.read()
-        print(templateSolutionCode)
+        #print(templateSolutionCode)
         return render(request,'playground.html',{'problem':problem,'templateSolutionCode':templateSolutionCode})
     else:
         return redirect('/auth/login')
@@ -134,5 +135,31 @@ def problems(request):
 def user_profile(request):
     if request.user.is_authenticated:
         return render(request,'user_profile.html')
+    else:
+        return redirect('/auth/login')
+
+
+def runtestcase(request):
+    if request.user.is_authenticated:
+
+        code = request.POST.get('code', None)
+        problem_id = request.POST.get('problem_id', None)
+        #print(code)
+        filename = 'attempts/'+request.user.username+'_'+str(problem_id)+'.py'
+        file = open(filename,'w')
+        for i in code:
+            file.write(str(i))
+        file.close()
+
+        # we get code variables in this dictionary
+        loc = {}
+        try:
+            exec(open(filename).read(),globals(),loc)
+            
+        except Exception as e:
+            status = str(e)
+            loc['status'] = status
+
+        return JsonResponse(loc)
     else:
         return redirect('/auth/login')

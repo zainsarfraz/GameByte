@@ -4,7 +4,7 @@
 GameByte - Playground
 {% endblock %}
 
-
+{% load static %}
 
 
 {% block body %}
@@ -23,15 +23,11 @@ GameByte - Playground
     height: auto; 
     border: 1px solid #ddd;
     /* BACKGROUND COLOR */
-    background-color: black;
-    color: white;
+   
     /* FIT  */
     height: 100%;
 }
-.CodeMirror-scroll {
-    /* removed horizontal scroll */
- /* max-height: 200px;  */
-}
+
 
 .banner { 
     background: #ffc; 
@@ -77,13 +73,14 @@ filter: blur(2px)
             <div class="col-12 vertical-scrollable " style="height: 200px; background-color: #252e38;padding: 20px">
                 <h3 style="font-family:Verdana;color:#fcdf18;font-size: 30px"><b style="font-weight: 900;" >{{problem.title}}</b>
                 </h3>
-                <p style="font-family:Verdana;color:white;">{{problem.description}}
+                <p style="font-family:Verdana;color: darkgrey;">{{problem.description}}
                 </p>
             </div>
         </div>
-        <div class="row" style="border: 1px solid darkgray; margin-top: 10px; background-color: #252e38">
-            <div class="col-12 vertical-scrollable" style="background-color:#252e38;color: darkgrey; font-family:monospace; font-size: x-large;height: 50px;">
+        <div class="row" style="border: 1px solid darkgray; margin-top: 10px; background-color: #252e38;height: 100px;">
+            <div class="col-12 vertical-scrollable" style="background-color:#252e38;color: darkgrey; font-family:monospace; font-size: x-large;height: 80px;">
                 <b>Console Output:</b>
+                <p id="console-output"> </p>
             </div>
 
         </div>
@@ -110,9 +107,20 @@ filter: blur(2px)
                 <div class="row">
                     <div class="col-12">
                         <hr>
-                        <button align="center"  class="btn btn-lg btn-outline-warning" onclick="init()">
-                            PLAY TESTCASE
-                        </button>
+                        <div class="row">
+                            <div class="col-6">
+                                <button align="center" id="testcasebtn" class="btn btn-lg btn-outline-warning" onclick="playTestCase()">
+                                    PLAY TESTCASE
+                                </button>
+                            </div>
+                            <div class="col-6">
+                                <div class="spinner-border text-warning" role="status" id="loading" style="display: none;">
+                                    <span class="sr-only">Loading...</span>
+                                  </div>
+                                  
+                            </div>
+                        </div>
+                        
                         <hr>
                     </div>
                 </div>
@@ -126,7 +134,7 @@ filter: blur(2px)
                 <div class="row">
                     <div class="col-12">
                         <hr>
-                        <button align="center" class="btn btn-lg btn-outline-primary">SUBMIT</button>
+                        <button align="center" class="btn btn-lg btn-outline-primary" id="submitbtn">SUBMIT</button>
                         <hr>
                     </div>
                 </div>
@@ -139,16 +147,105 @@ filter: blur(2px)
 
 {% endblock %}
 
-    
+
+
     {% block javascript %}
+    
+
     <script>
-        var editor = CodeMirror.fromTextArea(document.getElementById("demotext"), {
-            lineNumbers: true,
-            mode: "text/html",
-            matchBrackets: true
-        });
-    </script>
-    <script type="text/javascript">
+        // var editor = CodeMirror.fromTextArea(document.getElementById("demotext"), {
+        //     lineNumbers: true,
+        //     mode: "python",
+        //     theme:"leetcode",
+        //     keymap:"sublime",
+        //     matchBrackets: true,
+            
+        // });
+
+        var finalCode = "";
+        var codeMirrorGlobal;
+
+        window.onload = function () {
+            
+            var el = document.getElementById("demotext");
+            var version = "# version: Python3\n\n";
+            var codeAreaTip = "# please edit your code here:\n";
+            var codeStart = "# code start\n\n";
+            var codeEnd = "# code end\n\n";
+            var codeTip = "'''\nThis function is the entry of this program and\nit must be return your answer of current question.\n'''\n";
+            var code = "def solution():\n\tpass";
+            var initValue = version + codeAreaTip + codeStart + codeEnd + codeTip + code;
+            var myCodeMirror = CodeMirror.fromTextArea(el, {
+                mode: "python", // Language mode
+                theme: "dracula", // theme
+                //keyMap: "sublime", // Fast key style
+                lineNumbers: true, // set number
+                smartIndent: true, // smart indent
+                indentUnit: 4, // Smart indent in 4 spaces
+                indentWithTabs: true, // Smart indent with tabs
+                lineWrapping: true, // 
+                // Add line number display, folder and syntax detector to the slot
+                gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter", "CodeMirror-lint-markers"], 
+                foldGutter: true, // Enable code folding in slots
+                autofocus: true, // Autofocus
+                matchBrackets: true, // Match end symbols, such as "],}"
+                autoCloseBrackets: true, // Auto close symbol
+                styleActiveLine: true, // Display the style of the selected row
+                autcorrect: false, // Auto correct
+                
+            });
+            finalCode = myCodeMirror.getValue();
+            codeMirrorGlobal = myCodeMirror;
+            // Set the initial text, which can also be configured in the fromTextArea
+            //myCodeMirror.setOption("value", initValue);
+            // Editor key listening
+            myCodeMirror.on("keypress", function() {
+                // Show smart tips
+                  myCodeMirror.showHint(); // Note that the code at line 131 of show-hint.js in CodeMirror library is commented (code completion is blocked and intelligent prompt is provided)
+                    
+                });
+             
+           
+                
+        };
+        function playTestCase()
+                {
+
+                    loading = document.getElementById("loading");
+                    loading.style.display = "block";
+                    testcasebtn = document.getElementById("testcasebtn");
+                    submitbtn = document.getElementById("submitbtn");
+                    testcasebtn.disabled = true;
+                    submitbtn.disabled = true;
+
+                    code = document.getElementById("demotext").value;
+                    code  = codeMirrorGlobal.getValue();
+                 
+                    $.ajax({
+                        type: "POST",
+                        url: "{% url 'runtestcase' %}",
+                        data: {
+                            code: code,
+                            problem_id: '{{problem.id}}',
+                            csrfmiddlewaretoken: '{{ csrf_token }}',
+                        },
+                        success: function(data) {
+                            loading.style.display = "none";
+                            testcasebtn.disabled = false;
+                            submitbtn.disabled = false;
+                         
+                            if (data.status)
+                                document.getElementById("console-output").innerHTML =data.status; 
+                                else
+                                {
+                                    document.getElementById("console-output").innerHTML = JSON.stringify(data);
+                                    init();
+                                }
+                            }
+                            
+                    });
+                }
+        
         function nextField(current)
         {
             for (i = 0; i < current.form.elements.length; i++)
