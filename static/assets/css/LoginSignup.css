@@ -3,7 +3,8 @@
 }
 
 .bg-image {
-  background-image: url('');
+  height: 100%;
+    background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
 }
