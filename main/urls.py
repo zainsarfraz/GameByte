@@ -18,4 +18,5 @@ urlpatterns = [
     path('check_email',check_email,name='check_email'),
     path('check_username',check_username,name='check_username'),
     path('runtestcase',runtestcase,name='runtestcase'),
+    path('about',about,name='about'),
 ]

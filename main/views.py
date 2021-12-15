@@ -138,28 +138,59 @@ def user_profile(request):
     else:
         return redirect('/auth/login')
 
+def about(request):
+    if request.user.is_authenticated:
+        return render(request,'about.html')
+    else:
+        return redirect('/auth/login')
 
 def runtestcase(request):
     if request.user.is_authenticated:
 
         code = request.POST.get('code', None)
         problem_id = request.POST.get('problem_id', None)
-        #print(code)
+        argumentsString = request.POST.get('arguments', None)
+        argumentsString = argumentsString[1:-1]
+        arguments = argumentsString.split(',')
+        # creating code file
         filename = 'attempts/'+request.user.username+'_'+str(problem_id)+'.py'
         file = open(filename,'w')
         for i in code:
             file.write(str(i))
         file.close()
 
-        # we get code variables in this dictionary
-        loc = {}
-        try:
-            exec(open(filename).read(),globals(),loc)
-            
-        except Exception as e:
-            status = str(e)
-            loc['status'] = status
 
-        return JsonResponse(loc)
+        args = ""
+        for argument in arguments:
+            args += str(argument)+","
+        args = args[:-1]    
+
+        result = ""
+        errorFlag = False
+        errorMessage = ""
+
+        import subprocess
+        args = args.encode('utf-8')
+        try:
+            proc = subprocess.Popen(
+                'python '+filename+'',stdout=subprocess.PIPE,
+                stdin=subprocess.PIPE,stderr=subprocess.PIPE)
+            proc.stdin.write(args)
+            proc.stdin.close()
+            output,error = proc.communicate()
+            
+            if error != b'':
+                errorFlag = True
+                errorMessage = error.decode('utf-8')
+            if output != b'':
+                errorFlag = False         
+            result = output
+            result = result.decode('utf-8')
+            proc.wait()
+        except Exception as e:
+            print(e)
+
+        
+        return JsonResponse({'result':result,'error':errorFlag,'message':errorMessage})
     else:
         return redirect('/auth/login')

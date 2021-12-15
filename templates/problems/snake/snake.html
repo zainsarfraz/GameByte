@@ -24,8 +24,66 @@
 
 <script>
 
+var snakeXGlobal = 0;
+var snakeYGlobal = 0;
+var fruitXGlobal = 0;
+var fruitYGlobal = 0;
 
+
+function playTestCase()
+                {
+
+                    loading = document.getElementById("loading");
+                    loading.style.display = "block";
+                    testcasebtn = document.getElementById("testcasebtn");
+                    submitbtn = document.getElementById("submitbtn");
+                    testcasebtn.disabled = true;
+                    submitbtn.disabled = true;
+
+                    code = document.getElementById("demotext").value;
+                    code  = codeMirrorGlobal.getValue();
+                 
+                    $.ajax({
+                        type: "POST",
+                        url: "{% url 'runtestcase' %}",
+                        data: {
+                            code: code,
+                            problem_id: '{{problem.id}}',
+                            arguments: JSON.stringify([snakeXGlobal,snakeYGlobal,fruitXGlobal,fruitYGlobal]),
+                            csrfmiddlewaretoken: '{{ csrf_token }}',
+                        },
+                        success: function(data) {
+                            loading.style.display = "none";
+                            testcasebtn.disabled = false;
+                            submitbtn.disabled = false;
+                         
+                            if (data.status)
+                                document.getElementById("console-output").innerHTML =data.status; 
+                                else
+                                {
+                                    if (data.error)
+                                    {
+                                        document.getElementById("console-output").style.color = "red";
+                                        data.message = data.message.replaceAll('\r\n', '<br>');
+                                        document.getElementById("console-output").innerHTML = JSON.stringify(data.message);
+                                    }
+                                    else
+                                    {
+                                        document.getElementById("console-output").style.color = "";
+                                        data.result = data.result.replaceAll('\r\n', '<br>');
+                                        document.getElementById("console-output").innerHTML = JSON.stringify(data.result);
+                                        init();
+                                    }
+                                    
+                                }
+                            }
+                            
+                    });
+                }
   
+
+
+
 
 function init() {
 

@@ -69,16 +69,16 @@ filter: blur(2px)
                 </div>
             </div>
         </div>
-        <div class="row" style="border: 1px solid darkgray">
-            <div class="col-12 vertical-scrollable " style="height: 200px; background-color: #252e38;padding: 20px">
+        <div class="row" style="margin: 0px;">
+            <div class="col-12 vertical-scrollable " style="height: 200px; background-color: #252e38;padding: 10px">
                 <h3 style="font-family:Verdana;color:#fcdf18;font-size: 30px"><b style="font-weight: 900;" >{{problem.title}}</b>
                 </h3>
                 <p style="font-family:Verdana;color: darkgrey;">{{problem.description}}
                 </p>
             </div>
         </div>
-        <div class="row" style="border: 1px solid darkgray; margin-top: 10px; background-color: #252e38;height: 100px;">
-            <div class="col-12 vertical-scrollable" style="background-color:#252e38;color: darkgrey; font-family:monospace; font-size: x-large;height: 80px;">
+        <div class="row" style=" margin: 0px;margin-top: 10px; background-color: #252e38;height: 120px;">
+            <div class="col-12 vertical-scrollable" style="padding: 10px;background-color:#252e38;color: darkgrey; font-family:monospace; font-size: x-large;height: 100px;">
                 <b>Console Output:</b>
                 <p id="console-output"> </p>
             </div>
@@ -114,7 +114,7 @@ filter: blur(2px)
                                 </button>
                             </div>
                             <div class="col-6">
-                                <div class="spinner-border text-warning" role="status" id="loading" style="display: none;">
+                                <div class="spinner-border text-warning" role="status" id="loading" style="display: none;margin-top: 4px;" >
                                     <span class="sr-only">Loading...</span>
                                   </div>
                                   
@@ -208,43 +208,7 @@ filter: blur(2px)
            
                 
         };
-        function playTestCase()
-                {
-
-                    loading = document.getElementById("loading");
-                    loading.style.display = "block";
-                    testcasebtn = document.getElementById("testcasebtn");
-                    submitbtn = document.getElementById("submitbtn");
-                    testcasebtn.disabled = true;
-                    submitbtn.disabled = true;
-
-                    code = document.getElementById("demotext").value;
-                    code  = codeMirrorGlobal.getValue();
-                 
-                    $.ajax({
-                        type: "POST",
-                        url: "{% url 'runtestcase' %}",
-                        data: {
-                            code: code,
-                            problem_id: '{{problem.id}}',
-                            csrfmiddlewaretoken: '{{ csrf_token }}',
-                        },
-                        success: function(data) {
-                            loading.style.display = "none";
-                            testcasebtn.disabled = false;
-                            submitbtn.disabled = false;
-                         
-                            if (data.status)
-                                document.getElementById("console-output").innerHTML =data.status; 
-                                else
-                                {
-                                    document.getElementById("console-output").innerHTML = JSON.stringify(data);
-                                    init();
-                                }
-                            }
-                            
-                    });
-                }
+        
         
         function nextField(current)
         {
