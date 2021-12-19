@@ -172,12 +172,8 @@ def runtestcase(request):
         import subprocess
         args = args.encode('utf-8')
         try:
-            import os
-
-            path = filename
-            assert os.path.isfile(path)
-            with open(path, "r") as f:
-                pass
+            with open(filename, 'r') as f:
+                result = f.read()
             # in development
             # proc = subprocess.Popen(
             #     'python ' + filename +'',stdout=subprocess.PIPE,
@@ -202,7 +198,7 @@ def runtestcase(request):
         except Exception as e:
             print(e)
             errorMessage = str(e)
-            errorFlag = True
+            
 
         
         return JsonResponse({'result':result,'error':errorFlag,'message':errorMessage})
