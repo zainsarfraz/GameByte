@@ -172,15 +172,21 @@ def runtestcase(request):
         import subprocess
         args = args.encode('utf-8')
         try:
+            import os
+
+            path = filename
+            assert os.path.isfile(path)
+            with open(path, "r") as f:
+                pass
             # in development
-            # proc = subprocess.Popen(
-            #     'python ' + filename +'',stdout=subprocess.PIPE,
-            #     stdin=subprocess.PIPE,stderr=subprocess.PIPE)
+            proc = subprocess.Popen(
+                'python ' + filename +'',stdout=subprocess.PIPE,
+                stdin=subprocess.PIPE,stderr=subprocess.PIPE)
 
             # deployed code
-            proc = subprocess.Popen(
-                filename +'',stdout=subprocess.PIPE,
-                stdin=subprocess.PIPE,stderr=subprocess.PIPE)
+            # proc = subprocess.Popen(
+            #     filename +'',stdout=subprocess.PIPE,
+            #     stdin=subprocess.PIPE,stderr=subprocess.PIPE)
             proc.stdin.write(args)
             proc.stdin.close()
             output,error = proc.communicate()
