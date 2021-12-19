@@ -179,9 +179,15 @@ def runtestcase(request):
             #     stdin=subprocess.PIPE,stderr=subprocess.PIPE)
 
             # deployed code
-            proc = subprocess.Popen(
-                [filename],stdout=subprocess.PIPE,
+            import sys
+            if 'runserver' in sys.argv:
+                proc = subprocess.Popen(
+                'python ' + filename +'',stdout=subprocess.PIPE,
                 stdin=subprocess.PIPE,stderr=subprocess.PIPE)
+            else:
+                proc = subprocess.Popen(
+                    [filename],stdout=subprocess.PIPE,
+                    stdin=subprocess.PIPE,stderr=subprocess.PIPE)
             proc.stdin.write(args)
             proc.stdin.close()
             output,error = proc.communicate()
