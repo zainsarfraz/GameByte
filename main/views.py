@@ -155,6 +155,7 @@ def runtestcase(request):
         # creating code file
         filename = 'static/attempts/'+request.user.username+'_'+str(problem_id)+'.py'
         file = open(filename,'w')
+        file.write('#!/usr/bin/env python\n')
         for i in code:
             file.write(str(i))
         file.close()
