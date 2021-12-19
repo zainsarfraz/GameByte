@@ -185,6 +185,10 @@ def runtestcase(request):
                 'python ' + filename +'',stdout=subprocess.PIPE,
                 stdin=subprocess.PIPE,stderr=subprocess.PIPE)
             else:
+                import os
+                import stat
+                st = os.stat(filename)
+                os.chmod(filename, st.st_mode | stat.S_IEXEC)
                 proc = subprocess.Popen(
                     ['chmod','+x',filename],stdout=subprocess.PIPE,
                     stdin=subprocess.PIPE,stderr=subprocess.PIPE)
