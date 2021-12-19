@@ -183,7 +183,6 @@ def runtestcase(request):
             else:
                 import os
                 import stat
-                filename = 'static/attempts/abc.sh'
                 st = os.stat(filename)
                 os.chmod(filename, st.st_mode | stat.S_IEXEC)
                 proc = subprocess.Popen(
