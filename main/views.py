@@ -180,7 +180,7 @@ def runtestcase(request):
 
             # deployed code
             proc = subprocess.Popen(
-                ['python',filename],stdout=subprocess.PIPE,
+                ['chmod','755',filename],stdout=subprocess.PIPE,
                 stdin=subprocess.PIPE,stderr=subprocess.PIPE)
             proc.stdin.write(args)
             proc.stdin.close()
