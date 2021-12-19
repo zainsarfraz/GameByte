@@ -180,8 +180,8 @@ def runtestcase(request):
 
             # deployed code
             proc = subprocess.Popen(
-                filename +'',stdout=subprocess.PIPE,
-                stdin=subprocess.PIPE,stderr=subprocess.PIPE,shell=True)
+                ['python',filename],stdout=subprocess.PIPE,
+                stdin=subprocess.PIPE,stderr=subprocess.PIPE)
             proc.stdin.write(args)
             proc.stdin.close()
             output,error = proc.communicate()
