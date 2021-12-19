@@ -189,10 +189,9 @@ def runtestcase(request):
                 import stat
                 st = os.stat(filename)
                 os.chmod(filename, st.st_mode | stat.S_IEXEC)
-                # proc = subprocess.Popen(
-                #     [filename],stdout=subprocess.PIPE,
-                #     stdin=subprocess.PIPE,stderr=subprocess.PIPE)
-                subprocess.check_call([sys.executable or 'python',filename],stdout=subprocess.PIPE,stdin=subprocess.PIPE,stderr=subprocess.PIPE)
+                proc = subprocess.Popen(
+                    [sys.executable or 'python',filename],stdout=subprocess.PIPE,
+                    stdin=subprocess.PIPE,stderr=subprocess.PIPE)
             proc.stdin.write(args)
             proc.stdin.close()
             output,error = proc.communicate()
