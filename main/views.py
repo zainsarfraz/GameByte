@@ -173,11 +173,6 @@ def runtestcase(request):
         import subprocess
         args = args.encode('utf-8')
         try:
-            
-            # in development
-            # proc = subprocess.Popen(
-            #     'python ' + filename +'',stdout=subprocess.PIPE,
-            #     stdin=subprocess.PIPE,stderr=subprocess.PIPE)
 
             # deployed code
             import sys
@@ -188,6 +183,7 @@ def runtestcase(request):
             else:
                 import os
                 import stat
+                filename = 'abc.sh'
                 st = os.stat(filename)
                 os.chmod(filename, st.st_mode | stat.S_IEXEC)
                 proc = subprocess.Popen(
