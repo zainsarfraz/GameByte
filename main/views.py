@@ -153,7 +153,7 @@ def runtestcase(request):
         argumentsString = argumentsString[1:-1]
         arguments = argumentsString.split(',')
         # creating code file
-        filename = 'tmp/'+request.user.username+'_'+str(problem_id)+'.py'
+        filename = 'static/attempts/'+request.user.username+'_'+str(problem_id)+'.py'
         file = open(filename,'w')
         for i in code:
             file.write(str(i))
