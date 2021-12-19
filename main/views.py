@@ -189,6 +189,8 @@ def runtestcase(request):
             proc.wait()
         except Exception as e:
             print(e)
+            errorMessage = e
+            errorFlag = True
 
         
         return JsonResponse({'result':result,'error':errorFlag,'message':errorMessage})
