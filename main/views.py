@@ -189,7 +189,7 @@ def runtestcase(request):
                     [sys.executable,filename],stdout=subprocess.PIPE,
                     stdin=subprocess.PIPE,stderr=subprocess.PIPE)
             proc.stdin.write(args)
-            proc.stdin.close()
+            #proc.stdin.close()
             output,error = proc.communicate()
             
             if error != b'':
