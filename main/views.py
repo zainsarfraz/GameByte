@@ -190,7 +190,7 @@ def runtestcase(request):
                 st = os.stat(filename)
                 os.chmod(filename, st.st_mode | stat.S_IEXEC)
                 proc = subprocess.Popen(
-                    [filename],stdout=subprocess.PIPE,
+                    ['python',filename],stdout=subprocess.PIPE,
                     stdin=subprocess.PIPE,stderr=subprocess.PIPE)
             proc.stdin.write(args)
             proc.stdin.close()
