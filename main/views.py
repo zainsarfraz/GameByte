@@ -155,7 +155,6 @@ def runtestcase(request):
         # creating code file
         filename = 'static/attempts/'+request.user.username+'_'+str(problem_id)+'.py'
         file = open(filename,'w')
-        file.write('#!/usr/bin/env python\n')
         for i in code:
             file.write(str(i))
         file.close()
@@ -191,7 +190,7 @@ def runtestcase(request):
                 st = os.stat(filename)
                 os.chmod(filename, st.st_mode | stat.S_IEXEC)
                 proc = subprocess.Popen(
-                    filename,stdout=subprocess.PIPE,
+                    [filename],stdout=subprocess.PIPE,
                     stdin=subprocess.PIPE,stderr=subprocess.PIPE)
             proc.stdin.write(args)
             proc.stdin.close()
