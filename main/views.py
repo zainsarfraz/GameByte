@@ -153,7 +153,7 @@ def runtestcase(request):
         argumentsString = argumentsString[1:-1]
         arguments = argumentsString.split(',')
         # creating code file
-        filename = 'attempts/'+request.user.username+'_'+str(problem_id)+'.py'
+        filename = 'tmp/'+request.user.username+'_'+str(problem_id)+'.py'
         file = open(filename,'w')
         for i in code:
             file.write(str(i))
@@ -172,8 +172,14 @@ def runtestcase(request):
         import subprocess
         args = args.encode('utf-8')
         try:
+            # in development
+            # proc = subprocess.Popen(
+            #     'python ' + filename +'',stdout=subprocess.PIPE,
+            #     stdin=subprocess.PIPE,stderr=subprocess.PIPE)
+
+            # deployed code
             proc = subprocess.Popen(
-                'attempts/abc.py'+'',stdout=subprocess.PIPE,
+                filename +'',stdout=subprocess.PIPE,
                 stdin=subprocess.PIPE,stderr=subprocess.PIPE)
             proc.stdin.write(args)
             proc.stdin.close()
