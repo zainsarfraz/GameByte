@@ -55,12 +55,12 @@
         else {
           if (data.error) {
             document.getElementById("console-output").style.color = "red";
-            data.message = data.message.replaceAll("\r\n", "<br>");
+            data.message = data.message.replaceAll("\n", "<br>");
             document.getElementById("console-output").innerHTML =
               JSON.stringify(data.message);
           } else {
             document.getElementById("console-output").style.color = "";
-            data.result = data.result.replaceAll("\r\n", "<br>");
+            data.result = data.result.replaceAll("\n", "<br>");
             document.getElementById("console-output").innerHTML =
               JSON.stringify(data.result);
             init();
