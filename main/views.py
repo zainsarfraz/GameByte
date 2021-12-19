@@ -173,7 +173,7 @@ def runtestcase(request):
         args = args.encode('utf-8')
         try:
             proc = subprocess.Popen(
-                'python '+filename+'',stdout=subprocess.PIPE,
+                'python '+'abc.py'+'',stdout=subprocess.PIPE,
                 stdin=subprocess.PIPE,stderr=subprocess.PIPE)
             proc.stdin.write(args)
             proc.stdin.close()
