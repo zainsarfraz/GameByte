@@ -73,8 +73,8 @@ filter: blur(2px)
             <div class="col-12 vertical-scrollable " style="height: 200px; background-color: #252e38;padding: 10px">
                 <h3 style="font-family:monospace;color:#fcdf18;font-size:25px"><b style="font-weight: 900;" >{{problem.title}}</b>
                 </h3>
-                <p style="font-family:monospace; font-size: 13px;color: darkgray;">{{problem.description}}
-                </p>
+                <span id="problem-description" style="font-family:monospace; font-size: 13px;color: darkgray;" ></span>
+                
             </div>
         </div>
         <div class="row" style=" margin: 0px;margin-top: 10px; background-color: #252e38;height: 120px;">
@@ -167,6 +167,16 @@ filter: blur(2px)
 
         window.onload = function () {
             
+            // setting description of problem
+            var desc = "{{problem.description}}";
+            console.log(desc);
+            desc = desc.replaceAll('&lt;', '<');
+            desc = desc.replaceAll('&gt;', '>');
+            desc = desc.replaceAll('\n', '<br>');
+            document.getElementById("problem-description").innerHTML = desc;
+
+
+
             var el = document.getElementById("demotext");
             var version = "# version: Python3\n\n";
             var codeAreaTip = "# please edit your code here:\n";
