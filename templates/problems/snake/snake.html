@@ -15,6 +15,7 @@
 <canvas id="canvas"> </canvas>
 
 <script>
+  plan = []
   var snakeXGlobal = 0;
   var snakeYGlobal = 0;
   var fruitXGlobal = 0;
@@ -63,6 +64,13 @@
             data.result = data.result.replaceAll("\n", "<br>");
             document.getElementById("console-output").innerHTML =
               JSON.stringify(data.result);
+              data.result = data.result.replaceAll('<br>',',');
+              data.result = data.result.replaceAll('\r','');
+              data.result = data.result.replaceAll('\n','');
+
+              plan = data.result.split(',').map(function(item) {
+                return parseInt(item, 10);
+            });
             init();
           }
         }
@@ -71,6 +79,13 @@
   }
 
   function init() {
+
+
+    //plan = [0,0,0,0,2,0,0,0,0,1,0,0,1,0,0,1,0,0,2,0,0]
+    console.log(plan);
+    running = true;
+    index=0;
+
     var ctx;
     var turn = [];
 
@@ -86,7 +101,8 @@
     var X = (5 + MR() * (45 - 10)) | 0;
     var Y = (5 + MR() * (30 - 10)) | 0;
 
-    var direction = (MR() * 3) | 0;
+    //var direction = (MR() * 3) | 0;
+    var direction = 0;
 
     var interval = 0;
 
@@ -132,6 +148,25 @@
     placeFood();
 
     function clock() {
+
+
+      if (!running)
+      {
+        return
+      }
+      if (index < plan.length)
+        {
+          move(plan[index]);
+        index++;
+        }
+      else
+        {running = false
+          return
+        }
+
+
+
+
       if (easy) {
         X = (X + 45) % 45;
         Y = (Y + 30) % 30;
@@ -165,10 +200,12 @@
           dir = queue.pop();
 
           map[dir[0]][dir[1]] = 0;
+          
           ctx.clearRect(dir[0] * 10, dir[1] * 10, 10, 10);
         }
       } else if (!turn.length) {
         if (0) {
+          
           ctx.clearRect(0, 0, 450, 300);
           queue = [];
 
@@ -197,7 +234,79 @@
 
     interval = setInt(clock, 120);
 
-
+    function move(code)
+    {
+      //console.log(code,direction);
+      if (code==0)
+        return
+      else
+      {
+        if (code == 1 && direction == 0)
+        {
+          code = 3;
+          direction = 3;
+        }
+        else if (code == 2 && direction == 0)
+        {
+          code  = 1;
+          direction = 1
+        }
+        else if( code == 1 && direction == 3)
+        {
+          code = 2;
+          direction = 2;
+        }
+        else if( code == 2 && direction == 3)
+        {
+          code = 0;
+          direction = 0;
+        }
+        else if( code == 1 && direction == 1)
+        {
+          code = 0;
+          direction = 0;
+        }
+        else if(code == 2 && direction == 1)
+        {
+          code = 2;
+          direction = 2;
+        }
+        else if(code == 1 && direction == 2)
+        {
+          code = 1;
+          direction = 1;
+        }
+        else if (code == 2 && direction == 2)
+        {
+          code =3;
+          direction = 3;
+        }
+        
+      }
+      
+      /*
+       * 0: left
+       * 1: up
+       * 2: right
+       * 3: down
+       **/
+      if (0 <= code && code < 4 && code !== turn[0]) {
+        turn.unshift(code);
+      } else if (-5 == code) {
+        if (interval) {
+          clInt(interval);
+          interval = 0;
+        } else {
+          interval = setInt(clock, 120);
+        }
+      } else {
+        // O.o
+        dir = sum + code;
+        if (dir == 44 || dir == 94 || dir == 126 || dir == 171) {
+          sum += code;
+        } else if (dir === 218) easy = 1;
+      }
+    }
     // Movement of snake on arrow keys
 
     // doc.onkeydown = function (e) {
