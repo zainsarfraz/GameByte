@@ -28,3 +28,14 @@ class Problem(models.Model):
     
     def __str__(self) -> str:
         return self.title
+
+class Submission(models.Model):
+    user_id = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    problem_id = models.ForeignKey(Problem,on_delete=models.CASCADE,null=True)
+    submission_code = models.CharField(max_length=10000)
+    submission_time = models.DateTimeField(auto_now_add=True)
+    submission_language = models.CharField(max_length=100)
+    submission_score = models.IntegerField(default=0)
+
+    def __str__(self) -> str:
+        return self.user_id.username + " " + self.problem_id.title

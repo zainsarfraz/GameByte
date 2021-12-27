@@ -47,6 +47,50 @@ background: none
 button:hover:active:before {
 filter: blur(2px)
 }
+#snackbar {
+    float: right;
+    margin-left: 50px;
+  visibility: hidden; /* Hidden by default. Visible on click */
+  width: 200px; /* Set a default minimum width */
+  background-color: #333; /* Black background color */
+  color: #fff; /* White text color */
+  text-align: center; /* Centered text */
+  border-radius: 2px; /* Rounded borders */
+  padding: 16px; /* Padding */
+  position: fixed; /* Sit on top of the screen */
+  z-index: 1; /* Add a z-index if needed */
+  bottom: 30px; /* 30px from the bottom */
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#snackbar.show {
+  visibility: visible; /* Show the snackbar */
+  /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+  However, delay the fade out process for 2.5 seconds */
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
 @media (min-width: 1200px) {
     .container{
         max-width: 100%;
@@ -62,7 +106,7 @@ filter: blur(2px)
         <div class="row">
            
             <div class="col-12" style="padding: 10px;">
-                <div style="height: 300px; background-color: #111; width: 100%;">
+                <div style="height: 300px; background-color: #131c25; width: 100%;">
                     {% block game %}
                         {% include problem.problemGameFileName %}
                     {% endblock %}
@@ -98,7 +142,7 @@ filter: blur(2px)
             </div>
         </div>
         <div class="row" style="margin-top: 10px">
-            <div class="col-8" style="  height: 150px">
+            <div class="col-6" style="  height: 150px">
                 <div class="row">
                     <div class="col-12">
                         <h5 style="color: darkgray">Test cases</h5>
@@ -108,12 +152,12 @@ filter: blur(2px)
                     <div class="col-12">
                         <hr>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-9">
                                 <button align="center" id="testcasebtn" class="btn btn-lg btn-outline-warning" onclick="playTestCase()">
                                     PLAY TESTCASE
                                 </button>
                             </div>
-                            <div class="col-6">
+                            <div class="col-3">
                                 <div class="spinner-border text-warning" role="status" id="loading" style="display: none;margin-top: 4px;" >
                                     <span class="sr-only">Loading...</span>
                                   </div>
@@ -125,7 +169,7 @@ filter: blur(2px)
                     </div>
                 </div>
             </div>
-            <div class="col-4 float-right" style=" height: 150px; ">
+            <div class="col-6 float-right" style=" height: 150px; ">
                 <div class="row">
                     <div class="col-12">
                         <h5 style="color: darkgray">Actions</h5>
@@ -134,13 +178,27 @@ filter: blur(2px)
                 <div class="row">
                     <div class="col-12">
                         <hr>
-                        <button align="center" class="btn btn-lg btn-outline-primary" id="submitbtn">SUBMIT</button>
+                        <div class="row">
+                            <div class="col-9">
+                                <button align="center" class="btn btn-lg btn-outline-primary" id="submitbtn" onclick="submitCode()">SUBMIT</button>
+                            </div>
+                            <div class="col-3">
+                                <div class="spinner-border text-primary" role="status" id="loading2" style="display: none;margin-top: 4px;" >
+                                    <span class="sr-only">Loading...</span>
+                                  </div>
+                            </div>
+                            
+                        </div>
+                        
+                        
                         <hr>
                     </div>
+                    
                 </div>
             </div>
         </div>    
     </div>
+    <div id="snackbar">Code Submitted</div>
     {% comment %} <div class="col-1">
     </div> {% endcomment %}
 </div>
@@ -169,7 +227,7 @@ filter: blur(2px)
             
             // setting description of problem
             var desc = "{{problem.description}}";
-            console.log(desc);
+
             desc = desc.replaceAll('&lt;', '<');
             desc = desc.replaceAll('&gt;', '>');
             desc = desc.replaceAll('\n', '<br>');
@@ -234,6 +292,40 @@ filter: blur(2px)
                 }
             }
         }
+
+
+        function submitCode()
+        {
+            code = codeMirrorGlobal.getValue();
+            //console.log(code);
+            loading = document.getElementById('loading2');
+            loading.style.display = "block";
+            $.ajax({
+                type: "POST",
+                url: "{% url 'submitcode' %}",
+                data: {
+                    code: code,
+                    problem_id: "{{problem.id}}",
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                },
+                success: function (data) {
+                    loading.style.display = 'none';
+                    // Get the snackbar DIV
+                    var x = document.getElementById("snackbar");
+
+                    // Add the "show" class to DIV
+                    x.className = "show";
+
+                    // After 3 seconds, remove the show class from DIV
+                    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+                        
+                }
+            });
+        
+
+        }
+
+
     </script>
     {% endblock %}
 

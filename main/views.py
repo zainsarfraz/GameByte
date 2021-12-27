@@ -14,6 +14,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth import authenticate, login
+import datetime
 
 def googleAuthTest(request):
     print(request.user)
@@ -209,3 +210,11 @@ def runtestcase(request):
         return JsonResponse({'result':result,'error':errorFlag,'message':errorMessage})
     else:
         return redirect('/auth/login')
+def submitcode(request):
+    if request.user.is_authenticated:
+        code = request.POST.get('code', None)
+        problem_id = request.POST.get('problem_id', None)
+        problem = Problem.objects.get(id=problem_id)
+        submission = Submission(user_id=request.user,problem_id=problem,submission_code=code,submission_language='python')
+        submission.save()
+        return JsonResponse({'result':'success'})

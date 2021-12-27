@@ -1,5 +1,5 @@
 # Do not change this line.
-snakeX, snakeY, fruitX, fruitY = map(str,input().split(','))
+snakeX, snakeY, fruitX, fruitY = map(int,input().split(','))
 
 # You have access to the following variables:
 # snakeX, snakeY, fruitX, fruitY

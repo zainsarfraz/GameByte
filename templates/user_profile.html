@@ -1,227 +1,173 @@
 
 {% extends "base.html" %}
-
+{% load static %}
 {% block title %}
 {{ user.first_name }} {{user.last_name}}
 {% endblock %}
 
 
 {% block body %}
-    <div class="row">
+    <div class="row no-gutters" >
         <div class="col-md-12">
-            <div class="fb-profile-block">
+            <div class="fb-profile-block ">
                 <div class="fb-profile-block-thumb cover-container" style="background-image: url('/static/assets/img/cover/default_banner.jpg')">
-                    <button type="button" class="coverImageUploadButton" data-toggle="modal" data-target="#myModal">
-                        <i class="fa fa-camera"><b>Add a Cover</b></i>
-                    </button>
-                    <div class="modal fade" id="myModal" role="dialog">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content" style="background-color: #252e38">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Edit Picture</h4>
-                                    <button type="button" class="close" data-dismiss="modal" style="color: white">&times;
-                                    </button>
 
-                                </div>
-                                <div class="modal-body" style="height: 200px; text-align: center;color: white">Upload your Image here<br><br>
-                                    <input type="file" id="upload" hidden/>
-                                    <label for="upload" style="color: white">Select Image From Gallery</label>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-warning" style="background-color:#fcdf18;color: white " data-dismiss="modal">Save
-                                        </button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal" style="color: white">Close</button>
+                        <i class="fas fa-ellipsis-v fa-2x coverImageUploadButton" data-toggle="modal" data-target="#myModal"></i>
+
+                        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content" style="background-color: #252e38; color: #fcdf18;">
+                                    <br>
+                                    <div class="d-flex flex-row align-items-center back">
+                                        <h4 style="margin: 5px;">Upload Cover Photo</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="photo-input"> <input type="file" id="loadFile" onchange="console.log(this.files[0].name);" /> <button class="btn btn-sm btn-secondary" onclick="document.getElementById('loadFile').click()"> Select a file </button> </div>
+                                    </div>
+                                    <div class="mt-5 text-right" style="margin: 5px;">
+                                        <button class="btn btn-warning" type="button">Set Cover</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                    <br>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                 <ul style="list-style-type: none;margin: 0;padding: 0;overflow: hidden;">
-                            <li style="float: left;">
-                                <p style=" display: flex;margin-left: 200px;margin-top: 285px">
-                                    <i class=" fa fa-briefcase iconsStyle"></i>
-                                    <b style="color: #fcdf18; font-weight: bold;margin-top: 5px">Add Company</b>
-                                </p>
-{#                    <div class="modal fade" id="myModal2" role="dialog" style="">#}
-{#                        <div class="modal-dialog modal-lg">#}
-{#                            <div class="modal-content">#}
-{#                                <div class="modal-header">#}
-{#                                    <h4 class="modal-title" style="color: black">Enter Your Location</h4>#}
-{#                                    <button type="button" class="close" data-dismiss="modal">&times;#}
-{#                                    </button>#}
-{#                                </div>#}
-{#                                <div class="modal-body" style="height: 200px; text-align: ">#}
-{#                                    <label data-error="wrong" data-success="right" for="orangeForm-name"style="color: black">Country#}
-{#                                    </label>#}
-{#                                    <select class="form-select" aria-label="Default select example">#}
-{#                                        <option selected>Select Country</option>#}
-{#                                        <option value="1">One</option>#}
-{#                                        <option value="2">Two</option>#}
-{#                                        <option value="3">Three</option>#}
-{#                                    </select>#}
-{#                                    <label data-error="wrong" data-success="right" for="orangeForm-name" style="color: black">City</label>#}
-{#                                    <input type="text" placeholder="City" id="orangeForm-name" class="form-control validate">#}
-{#                                </div>#}
-{#                                <div class="modal-footer">#}
-{#                                    <button type="button" class="btn btn-warning" style="background-color:#fcdf18 " data-dismiss="modal">Confirm#}
-{#                                    </button>#}
-{#                                    <button type="button" class="btn btn-default" data-dismiss="modal" style="color: black" >Cancel#}
-{#                                    </button>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-                </li>
+                <ul style="list-style-type: none;margin: 0;padding: 0;overflow: hidden;">
                     <li style="float: left;">
-                                <p style=" display: flex;margin-left: 10px;margin-top: 285px">
-                                    <i class=" fa fa-graduation-cap iconsStyle" ></i>
-                                    <b style="color: #fcdf18; font-weight: bold;margin-top: 5px">Add University</b>
-                                </p>
-{#                    <div class="modal fade" id="myModal3" role="dialog" style="">#}
-{#                        <div class="modal-dialog modal-lg">#}
-{#                            <div class="modal-content">#}
-{#                                <div class="modal-header">#}
-{#                                    <h4 class="modal-title" style="color: black">Enter Your Company Name</h4>#}
-{#                                    <button type="button" class="close" data-dismiss="modal">&times;#}
-{#                                    </button>#}
-{#                                </div>#}
-{#                                <div class="modal-body" style="height: 200px; text-align: ">#}
-{##}
-{#                                    <label data-error="wrong" data-success="right" for="orangeForm-name" style="color: black">Company Name</label>#}
-{#                                    <input type="text" id="orangeForm-name" class="form-control validate">#}
-{#                                </div>#}
-{#                                <div class="modal-footer">#}
-{#                                    <button type="button" class="btn btn-warning" style="background-color:#fcdf18;color: black" data-dismiss="modal">Confirm#}
-{#                                    </button>#}
-{#                                    <button type="button" class="btn btn-default" data-dismiss="modal" style="color: black">Cancel#}
-{#                                    </button>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-                </li>
-                     <li style="float: left;">
-                                <p style=" display: flex;margin-left: 10px;margin-top: 285px">
-                                    <i class=" fa fa-map-marker iconsStyle"></i>
-                                    <b style="color: #fcdf18; font-weight: bold;margin-top: 5px">Add Location</b>
-                                </p>
-{#                    <div class="modal fade" id="myModal4" role="dialog" style="">#}
-{#                        <div class="modal-dialog modal-lg">#}
-{#                            <div class="modal-content">#}
-{#                                <div class="modal-header">#}
-{#                                    <h4 class="modal-title" style="color: black">Enter Your University Name</h4>#}
-{#                                    <button type="button" class="close" data-dismiss="modal">&times;#}
-{#                                    </button>#}
-{#                                </div>#}
-{#                                <div class="modal-body" style="height: 200px; text-align: ">#}
-{##}
-{#                                    <label data-error="wrong" data-success="right" for="orangeForm-name" style="color: black">Univerity Name</label>#}
-{#                                    <input type="text" id="orangeForm-name" class="form-control validate">#}
-{#                                </div>#}
-{#                                <div class="modal-footer">#}
-{#                                    <button type="button" class="btn btn-warning" style="background-color:#fcdf18 ;color: black" data-dismiss="modal">Confirm#}
-{#                                    </button>#}
-{#                                    <button type="button" class="btn btn-default" data-dismiss="modal" style="color: black">Cancel#}
-{#                                    </button>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-                </li>
-            </ul>
+                        <p style=" display: flex ;margin-left: 200px;margin-top: 285px">
+                            
+                            <span class="fa-stack">
+                                <!-- The icon that will wrap the number -->
+                                <span class="fas fa-circle fa-stack-2x" style="color: white;"></span>
+                                <!-- a strong element with the custom content, in this case a number -->
+                                <strong class="fa-stack-1x ">
+                                    <i class="fa fa-briefcase" style="color: black;"></i>    
+                                </strong>
+                            </span>
+                            
+                            <b style="color: #fcdf18; margin-top: 2px; font-family: monospace;">Add Company</b>
+                        </p>
+                    </li>
+                    
+                    <li style="float: left;" class="small">
+                        <p style=" display: flex;margin-left: 30px;margin-top: 285px">
+                            
+                            <span class="fa-stack">
+                                <!-- The icon that will wrap the number -->
+                                <span class="fas fa-circle fa-stack-2x" style="color: white;"></span>
+                                <!-- a strong element with the custom content, in this case a number -->
+                                <strong class="fa-stack-1x ">
+                                    <i class="fa fa-graduation-cap" style="color: black;"></i>    
+                                </strong>
+                            </span>
+                            
+                            <b style="color: #fcdf18; margin-top: 5px; font-family: monospace;">Add University</b>
+                        </p>
+                    </li>
+                    
+                    
+                    <li style="float: left;" class="small">
+                        <p style=" display: flex;margin-left: 30px;margin-top: 285px">
+                            
+                            <span class="fa-stack">
+                                <!-- The icon that will wrap the number -->
+                                <span class="fas fa-circle fa-stack-2x" style="color: white;"></span>
+                                <!-- a strong element with the custom content, in this case a number -->
+                                <strong class="fa-stack-1x ">
+                                    <i class="fa fa-map-marker" style="color: black;"></i>    
+                                </strong>
+                            </span>
+                            
+                            <b style="color: #fcdf18; margin-top: 5px; font-family: monospace;">Add Location</b>
+                        </p>
+                    </li>
+                    
+                </ul>
 
 
                 </div>
                 <div class="profile-img">
                     <a href="#">
-                        <input type="button" class="my_file1" data-toggle="modal" data-target="#profilePicModal">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="profilePic" title="">
+
+                        <img src="{% static 'assets/img/avatars/avatar-06.png' %}" alt="profilePic" title="">
                     </a>
                 </div>
-                <div class="modal fade" id="profilePicModal" role="dialog">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content" style="background-color: #252e38">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Edit Picture</h4>
-                                    <button type="button" class="close" data-dismiss="modal" style="color: white">&times;
-                                    </button>
 
-                                </div>
-                                <div class="modal-body" style="height: 200px; text-align: center;color: white">Upload your Image here<br><br>
-                                    <input type="file" id="upload" hidden/>
-                                    <label for="upload" style="color: white">Select Image From Gallery</label>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-warning" style="background-color:#fcdf18;color: white " data-dismiss="modal">Save
-                                        </button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal" style="color: white">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 <div class="profile-name" style="margin-bottom: 15px">
-                    <h2>Nouman Latif</h2>
-                    <h5>Biography</h5>
+                    <h2>{{user.first_name}} {{user.last_name}}</h2>
                 </div>
 
 
                 <div class="fb-profile-block-menu">
                     <div class="block-menu">
-{#                        <div class="row">#}
-{#                            <div class="col-2">#}
-{#                                <p>Loaction</p>#}
-{#                            </div>#}
-{#                            <div class="col-2">#}
-{#                                <p>Company</p>#}
-{#                            </div>#}
-{#                            <div class="col-2">#}
-{#                                <p>University</p>#}
-{#                            </div>#}
-{#                            <div class="col-2" style=" display: flex; margin: 1%; float: right; justify-content: flex-end">#}
-                            <button type="button" class= "editProfileButton" data-toggle="modal" data-target="#editProfileModal">
+                            <button type="button" class= "btn btn-warning editProfileButton"
+                             data-toggle="modal" data-target="#editProfileModal"
+                             style="background-color: #fcdf18; border: #fcdf18;">
                                 <i class="fa fa-pencil" ><b>Edit Profile</b></i>
                             </button>
                             <div class="modal fade" id="editProfileModal" role="dialog">
                                 <div class="modal-dialog modal-lg">
-                                    <div class="modal-content" style="background-color: #252e38">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title" style="color: white">Edit Profile</h4>
-                                            <button type="button" class="close" data-dismiss="modal" style="color: white">&times;
-                                            </button>
-                                        </div>
-                                        <div class="modal-body" >
-{#                                            <label data-error="wrong" data-success="right" for="orangeForm-companyName" style="color: white">Company Name</label>#}
-                                            <div >
-                                                <span><i class=" fa fa-briefcase"></i></span>
-                                                <input type="text" id="orangeForm-companyName" class="form-control validate input-box" placeholder="Company Name">
+                                    <div class="modal-content" style="background-color: #252e38; color: #fcdf18;">
+                                    
+                                            <div class="container rounded" style="background-color: #252e38;">
+                                                <div class="row">
+                                                    <div class="col-md-4 border-right">
+                                                        <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" id="img-preview" src="{% static 'assets/img/avatars/avatar-06.png' %}" height="90" width="90">
+                                                            <span class="font-weight-bold">{{user.first_name}} {{user.last_name}}</span>
+                                                            <span style="color: white;">{{user.email}}</span>
+                                                            <span style="color: white;">Pakistan</span></div>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="p-3 py-5">
+                                                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                                                    <div class="d-flex flex-row align-items-center back">
+                                                                        <h4>Edit Profile</h4>
+                                                                    </div>
+                                                                    </div>
+                                                                    
+                                                                    <div class="form-floating mb-3">
+                                                                        <input type="text" class="form-control" name="company" id="floatingInputCompany" placeholder="Company">
+                                                                        <label for="floatingInputCompany" style="color: black;"><i class="fa fa-briefcase" style="margin-right: 10px; color: black;" ></i> Company</label>
+                                                                    </div> 
+                                                                   
+                                                                    <div class="form-floating mb-3">
+                                                                        <input type="text" class="form-control" name="university" id="floatingInputUniversity" placeholder="University">
+                                                                        <label for="floatingInputUniversity" style="color: black;"><i class="fa fa-graduation-cap" style="margin-right: 10px; color: black;" ></i> University</label>
+                                                                    </div> 
+
+                                                                    <div class="form-floating mb-3">
+                                                                        <input type="text" class="form-control" name="programmingLanguages" id="floatingInputPL" placeholder="Programming Languages">
+                                                                        <label for="floatingInputPL" style="color: black;"><i class="fa fa-code" style="margin-right: 10px; color: black;" ></i> Programming Languages</label>
+                                                                    </div> 
+
+                                                                    <div class="form-floating mb-3">
+                                                                        <input type="text" class="form-control" name="Skills" id="floatingInputSkills" placeholder="Skills">
+                                                                        <label for="floatingInputSkills" style="color: black;"><i class="fa fa-cogs" style="margin-right: 10px; color: black;" ></i> Skills</label>
+                                                                    </div>
+                                                                    
+                                                                    <div class="form-floating mb-3">
+                                                                        <input type="text" class="form-control" name="country" id="floatingInputCountry" placeholder="Country">
+                                                                        <label for="floatingInputCountry" style="color: black;"><i class="fa fa-map-marker" style="margin-right: 10px; color: black;" ></i> Country</label>
+                                                                    </div>
+                                                                    <div class="form-floating mb-3">
+                                                                        <input type="file" class="form-control" name="profile_pic" id="floatingInputPPic" placeholder="Profile Pic" accept="image/*" onchange="showPreview(event);">
+                                                                        <label for="floatingInputPPic" style="color: black;"><i class="fa fa-picture-o" style="margin-right: 10px; color: black;" ></i> Profile Picture</label>
+                                                                    </div>
+                                                    
+                                                                    <div class="form-floating mb-3">
+                                                                        <textarea class="form-control" name="about" id="floatingInputAbout" rows="4" cols="40" placeholder="About You"></textarea>
+                                                                        <label for="floatingInputAbout" style="color: black;"><i class="fa fa-info-circle" style="margin-right: 10px; color: black;" ></i> About You</label>
+                                                                    </div>
+                                                                    <div class="mt-5 text-right">
+                                                                        <button class="btn btn-warning" type="button">Save Profile</button>
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                </div>
                                             </div>
-
-{#                                            <label data-error="wrong" data-success="right" for="orangeForm-universityName" style="color: white">University Name</label>#}
-                                            <i class=" fa fa-graduation-cap"></i>
-                                            <input type="text" id="orangeForm-universityName" class="form-control validate input-box" placeholder="University Name">
-
-{#                                            <label data-error="wrong" data-success="right" for="orangeForm-countryName" style="color: white">Country Name</label>#}
-                                            <i class="  fa fa-map-marker"></i>
-                                            <input type="text" id="orangeForm-countryName" class="form-control validate input-box" placeholder="Country Name">
-
-{#                                            <label data-error="wrong" data-success="right" for="orangeForm-aboutYou" style="color: white">About Yourself</label>#}
-                                            <i class=" fa fa-user"></i>
-                                            <input type="textarea" id="orangeForm-aboutYou" class="form-control validate input-box" placeholder="About Yourself">
-
-{#                                            <label data-error="wrong" data-success="right" for="orangeForm-languages" style="color: white">Programming Languages</label>#}
-                                            <i class=" fa fa-code"></i>
-                                            <input type="text" id="orangeForm-languages" class="form-control validate input-box" placeholder="Programming Languages">
-
-{#                                            <label data-error="wrong" data-success="right" for="orangeForm-skills" style="color: white">Skills</label>#}
-                                            <i class=" fa fa-cogs"></i>
-                                            <input type="text" id="orangeForm-skills" class="form-control validate input-box" placeholder="Skills">
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-warning" style="background-color:#fcdf18;color: white" data-dismiss="modal">Save
-                                            </button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal" style="color: white">Cancel
-                                            </button>
-                                        </div>
+                                       
                                     </div>
                                 </div>
                             </div>
@@ -238,11 +184,8 @@
 				<li>
 					<div class="card" data-toggle="modal" data-target="#myModal5" style="background-color: #252e38">
 						<div class="card-body" style="height: 90px">
-							<h4 style="color: #fcdf18">ABOUT ME
-{#							<i class=" fa fa-pencil" aria-hidden="true" style="color: white; margin-left: 5px"></i>#}
-						    </h4>
-
-							<p class="card-text"><b>Introduce yourself</b></p>
+							<h4 style="color: #fcdf18">ABOUT ME</h4>
+							<p class="card-text">Introduce yourself</p>
 						</div>
 					</div>
 				</li>
@@ -267,16 +210,26 @@
 
 		</div>
 		<div class="col-sm-5">
-				<div class="card" data-toggle="modal" data-target="#right_modal">
-					<div class="card-body" style="height: 250px;background-color: #252e38">
+				<div class="card" data-toggle="modal" data-target="#right_modal" style="border: none;background-color: #252e38">
+					<div class="card-body" style="height: auto">
 						<h4 style="color: #fcdf18">PROGRESSION</h4>
-						<p class="card-text" style="text-align: center;margin-top: 70px;font-size: 20px; color: #fcdf18"><b>Level </b></p>
-						<h4 style="margin-top: 40px; color: #fcdf18">Next level</h4>
-						<div class="progress" >
-							<div class="progress-bar bg-warning" style="width: 80% ;">
-
-							</div>
-						</div>
+						<p class="card-text" style="text-align: center;margin-top: 50px;font-size: 20px; color: #fcdf18">
+                            <span class="fa-stack" style="margin-bottom: 40px;">
+                                <!-- The icon that will wrap the number -->
+                                <span class="fas fa-stack-2x"><img src="{% static 'assets/img/icon/star.png' %}" alt="star" height="70" width="70"></span>
+                                <!-- a strong element with the custom content, in this case a number -->
+                                <strong class="fa-stack-1x " style="color: goldenrod; margin-top: 15px; margin-left: 13px;">
+                                    <b>1</b>
+                                </strong>
+                            </span>
+                            <b style=" margin-left: 30px; font-family: monospace;">Level </b></p>
+						    <div>
+                                <h4 style="margin-top: 40px; color: #fcdf18">Next level</h4>
+						        <div class="progress">
+							        <div class="progress-bar bg-warning" style="width: 80% ;">
+							        </div>
+						        </div>
+                            </div>
 					</div>
 				</div>
 
@@ -286,6 +239,15 @@
 </div>
         </div>
     </div>
-
+<script>
+function showPreview(event){
+  if(event.target.files.length > 0){
+    var src = URL.createObjectURL(event.target.files[0]);
+    var preview = document.getElementById("img-preview");
+    preview.src = src;
+    preview.style.display = "block";
+  }
+}
+</script>
 
 {% endblock %}

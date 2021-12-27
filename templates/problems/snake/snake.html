@@ -15,7 +15,7 @@
 <canvas id="canvas"> </canvas>
 
 <script>
-  plan = []
+  plan = [];
   var snakeXGlobal = 0;
   var snakeYGlobal = 0;
   var fruitXGlobal = 0;
@@ -32,59 +32,13 @@
     code = document.getElementById("demotext").value;
     code = codeMirrorGlobal.getValue();
 
-    $.ajax({
-      type: "POST",
-      url: "{% url 'runtestcase' %}",
-      data: {
-        code: code,
-        problem_id: "{{problem.id}}",
-        arguments: JSON.stringify([
-          snakeXGlobal,
-          snakeYGlobal,
-          fruitXGlobal,
-          fruitYGlobal,
-        ]),
-        csrfmiddlewaretoken: "{{ csrf_token }}",
-      },
-      success: function (data) {
-        loading.style.display = "none";
-        testcasebtn.disabled = false;
-        submitbtn.disabled = false;
-
-        if (data.status)
-          document.getElementById("console-output").innerHTML = data.status;
-        else {
-          if (data.error) {
-            document.getElementById("console-output").style.color = "red";
-            data.message = data.message.replaceAll("\n", "<br>");
-            document.getElementById("console-output").innerHTML =
-              JSON.stringify(data.message);
-          } else {
-            document.getElementById("console-output").style.color = "";
-            data.result = data.result.replaceAll("\n", "<br>");
-            document.getElementById("console-output").innerHTML =
-              JSON.stringify(data.result);
-              data.result = data.result.replaceAll('<br>',',');
-              data.result = data.result.replaceAll('\r','');
-              data.result = data.result.replaceAll('\n','');
-
-              plan = data.result.split(',').map(function(item) {
-                return parseInt(item, 10);
-            });
-            init();
-          }
-        }
-      },
-    });
+    init();
   }
 
   function init() {
-
-
     //plan = [0,0,0,0,2,0,0,0,0,1,0,0,1,0,0,1,0,0,2,0,0]
-    console.log(plan);
     running = true;
-    index=0;
+    index = 0;
 
     var ctx;
     var turn = [];
@@ -100,6 +54,9 @@
 
     var X = (5 + MR() * (45 - 10)) | 0;
     var Y = (5 + MR() * (30 - 10)) | 0;
+  
+    snakeXGlobal = X;
+    snakeYGlobal = Y;
 
     //var direction = (MR() * 3) | 0;
     var direction = 0;
@@ -134,38 +91,38 @@
 
     //doc.body.appendChild(canvas);
     //doc.body.appendChild(link);
+
     function placeFood() {
       var x, y;
 
       do {
         x = (MR() * 45) | 0;
         y = (MR() * 30) | 0;
+        fruitXGlobal = x;
+        fruitYGlobal = y;
       } while (map[x][y]);
 
       map[x][y] = 1;
       ctx.strokeRect(x * 10 + 1, y * 10 + 1, 10 - 2, 10 - 2);
     }
-    placeFood();
-
     function clock() {
 
+      
 
-      if (!running)
-      {
-        return
+      if (!running) {
+        return;
       }
-      if (index < plan.length)
-        {
-          move(plan[index]);
+      if (index < plan.length) {
+        move(plan[index]);
         index++;
-        }
-      else
-        {running = false
-          return
-        }
-
-
-
+      } else {
+        running = false;
+        loading.style.display = "none";
+        testcasebtn.disabled = false;
+        submitbtn.disabled = false;
+        clInt(interval);
+        return;
+      }
 
       if (easy) {
         X = (X + 45) % 45;
@@ -200,12 +157,14 @@
           dir = queue.pop();
 
           map[dir[0]][dir[1]] = 0;
-          
+
           ctx.clearRect(dir[0] * 10, dir[1] * 10, 10, 10);
         }
       } else if (!turn.length) {
+        loading.style.display = "none";
+        testcasebtn.disabled = false;
+        submitbtn.disabled = false;
         if (0) {
-          
           ctx.clearRect(0, 0, 450, 300);
           queue = [];
 
@@ -232,58 +191,40 @@
       }
     }
 
-    interval = setInt(clock, 120);
 
-    function move(code)
-    {
+    function move(code) {
       //console.log(code,direction);
-      if (code==0)
-        return
-      else
-      {
-        if (code == 1 && direction == 0)
-        {
+      if (code == 0) return;
+      else {
+        if (code == 1 && direction == 0) {
           code = 3;
           direction = 3;
-        }
-        else if (code == 2 && direction == 0)
-        {
-          code  = 1;
-          direction = 1
-        }
-        else if( code == 1 && direction == 3)
-        {
-          code = 2;
-          direction = 2;
-        }
-        else if( code == 2 && direction == 3)
-        {
-          code = 0;
-          direction = 0;
-        }
-        else if( code == 1 && direction == 1)
-        {
-          code = 0;
-          direction = 0;
-        }
-        else if(code == 2 && direction == 1)
-        {
-          code = 2;
-          direction = 2;
-        }
-        else if(code == 1 && direction == 2)
-        {
+        } else if (code == 2 && direction == 0) {
           code = 1;
           direction = 1;
-        }
-        else if (code == 2 && direction == 2)
-        {
-          code =3;
+        } else if (code == 1 && direction == 3) {
+          code = 2;
+          direction = 2;
+        } else if (code == 2 && direction == 3) {
+          code = 0;
+          direction = 0;
+        } else if (code == 1 && direction == 1) {
+          code = 0;
+          direction = 0;
+        } else if (code == 2 && direction == 1) {
+          code = 2;
+          direction = 2;
+        } else if (code == 1 && direction == 2) {
+          code = 1;
+          direction = 1;
+        } else if (code == 2 && direction == 2) {
+          code = 3;
           direction = 3;
+        } else {
+          return;
         }
-        
       }
-      
+
       /*
        * 0: left
        * 1: up
@@ -306,8 +247,7 @@
           sum += code;
         } else if (dir === 218) easy = 1;
       }
-    }
-    // Movement of snake on arrow keys
+      // Movement of snake on arrow keys
 
     // doc.onkeydown = function (e) {
     //   var code = e.keyCode - 37;
@@ -335,5 +275,76 @@
     //     } else if (dir === 218) easy = 1;
     //   }
     // };
+    }
+    placeFood();
+    console.log(snakeXGlobal,snakeYGlobal,fruitXGlobal,fruitYGlobal);
+
+    
+    $.ajax({
+      type: "POST",
+      url: "{% url 'runtestcase' %}",
+      data: {
+        code: code,
+        problem_id: "{{problem.id}}",
+        arguments: JSON.stringify([
+          snakeXGlobal,
+          snakeYGlobal,
+          fruitXGlobal,
+          fruitYGlobal,
+        ]),
+        csrfmiddlewaretoken: "{{ csrf_token }}",
+      },
+      success: function (data) {
+        
+
+        if (data.status)
+          document.getElementById("console-output").innerHTML = data.status;
+        else {
+          if (data.error) {
+            document.getElementById("console-output").style.color = "red";
+            data.message = data.message.replaceAll("\n", "<br>");
+            data.message = data.message.replaceAll("\r", "");
+            document.getElementById("console-output").innerHTML =
+              JSON.stringify(data.message);
+              loading.style.display = "none";
+        testcasebtn.disabled = false;
+        submitbtn.disabled = false;
+          } else {
+            document.getElementById("console-output").style.color = "";
+            data.result = data.result.replaceAll("\n", "<br>");
+            data.result = data.result.replaceAll("\r", "");
+            document.getElementById("console-output").innerHTML =
+              JSON.stringify(data.result);
+            data.result = data.result.replaceAll("<br>", ",");
+            data.result = data.result.replaceAll("\r", "");
+            data.result = data.result.replaceAll("\n", "");
+
+            plan = data.result.split(",").map(function (item) {
+              return parseInt(item, 10);
+            });
+
+            console.log(plan)
+            for(var i = 0; i < plan.length; i++){
+              if(plan[i] == 0 || plan[i] == 1 || plan[i] == 2){
+                continue;
+              }
+              else{
+                plan.splice(i);
+              }
+            }
+            console.log(plan)
+            interval = setInt(clock, 120);
+            //init();
+          }
+        }
+      },
+    });
+
+
+
+
+
+ 
+    
   }
 </script>
