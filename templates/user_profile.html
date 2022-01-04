@@ -1,4 +1,5 @@
 
+
 {% extends "base.html" %}
 {% load static %}
 {% block title %}
@@ -12,17 +13,20 @@
             <div class="fb-profile-block ">
                 <div class="fb-profile-block-thumb cover-container" style="background-image: url('/static/assets/img/cover/default_banner.jpg')">
 
-                        <i class="fas fa-ellipsis-v fa-2x coverImageUploadButton" data-toggle="modal" data-target="#myModal"></i>
+                        <i class="fa fa-camera fa-2x coverImageUploadButton" data-toggle="modal" data-target="#myModal"></i>
 
                         <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content" style="background-color: #252e38; color: #fcdf18;">
                                     <br>
                                     <div class="d-flex flex-row align-items-center back">
-                                        <h4 style="margin: 5px;">Upload Cover Photo</h4>
+                                        <h4 class="mt-1 ml-3">Upload Cover Photo</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <div class="photo-input"> <input type="file" id="loadFile" onchange="console.log(this.files[0].name);" /> <button class="btn btn-sm btn-secondary" onclick="document.getElementById('loadFile').click()"> Select a file </button> </div>
+                                        <div class="photo-input mt-5">
+                                             <input type="file" id="loadFile" onchange="console.log(this.files[0].name);" />
+                                                <button class="btn btn-sm btn-secondary" onclick="document.getElementById('loadFile').click()"> Select a file </button>
+                                        </div>
                                     </div>
                                     <div class="mt-5 text-right" style="margin: 5px;">
                                         <button class="btn btn-warning" type="button">Set Cover</button>
@@ -46,7 +50,7 @@
                                 </strong>
                             </span>
                             
-                            <b style="color: #fcdf18; margin-top: 2px; font-family: monospace;">Add Company</b>
+                            <b style="color: #fcdf18; margin-top: 2px; font-family: monospace;">{{userDetails.company}}</b>
                         </p>
                     </li>
                     
@@ -62,7 +66,7 @@
                                 </strong>
                             </span>
                             
-                            <b style="color: #fcdf18; margin-top: 5px; font-family: monospace;">Add University</b>
+                            <b style="color: #fcdf18; margin-top: 5px; font-family: monospace;">{{userDetails.education}}</b>
                         </p>
                     </li>
                     
@@ -79,7 +83,7 @@
                                 </strong>
                             </span>
                             
-                            <b style="color: #fcdf18; margin-top: 5px; font-family: monospace;">Add Location</b>
+                            <b style="color: #fcdf18; margin-top: 5px; font-family: monospace;">{{userDetails.country}}</b>
                         </p>
                     </li>
                     
@@ -116,7 +120,7 @@
                                                         <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" id="img-preview" src="{% static 'assets/img/avatars/avatar-06.png' %}" height="90" width="90">
                                                             <span class="font-weight-bold">{{user.first_name}} {{user.last_name}}</span>
                                                             <span style="color: white;">{{user.email}}</span>
-                                                            <span style="color: white;">Pakistan</span></div>
+                                                            <span style="color: white;">{{userDetails.country}}</span></div>
                                                         </div>
                                                         <div class="col-md-8">
                                                             <div class="p-3 py-5">
@@ -127,40 +131,40 @@
                                                                     </div>
                                                                     
                                                                     <div class="form-floating mb-3">
-                                                                        <input type="text" class="form-control" name="company" id="floatingInputCompany" placeholder="Company">
+                                                                        <input type="text" class="form-control" name="company" id="floatingInputCompany" placeholder="Company" value="{{userDetails.company}}">
                                                                         <label for="floatingInputCompany" style="color: black;"><i class="fa fa-briefcase" style="margin-right: 10px; color: black;" ></i> Company</label>
                                                                     </div> 
                                                                    
                                                                     <div class="form-floating mb-3">
-                                                                        <input type="text" class="form-control" name="university" id="floatingInputUniversity" placeholder="University">
+                                                                        <input type="text" class="form-control" name="university" id="floatingInputUniversity" placeholder="University" value="{{userDetails.education}}">
                                                                         <label for="floatingInputUniversity" style="color: black;"><i class="fa fa-graduation-cap" style="margin-right: 10px; color: black;" ></i> University</label>
                                                                     </div> 
 
                                                                     <div class="form-floating mb-3">
-                                                                        <input type="text" class="form-control" name="programmingLanguages" id="floatingInputPL" placeholder="Programming Languages">
+                                                                        <input type="text" class="form-control" name="programmingLanguages" id="floatingInputPL" placeholder="Programming Languages" value="{{userDetails.programming_languages}}">
                                                                         <label for="floatingInputPL" style="color: black;"><i class="fa fa-code" style="margin-right: 10px; color: black;" ></i> Programming Languages</label>
                                                                     </div> 
 
                                                                     <div class="form-floating mb-3">
-                                                                        <input type="text" class="form-control" name="Skills" id="floatingInputSkills" placeholder="Skills">
+                                                                        <input type="text" class="form-control" name="Skills" id="floatingInputSkills" placeholder="Skills" value="{{userDetails.skills}}">
                                                                         <label for="floatingInputSkills" style="color: black;"><i class="fa fa-cogs" style="margin-right: 10px; color: black;" ></i> Skills</label>
                                                                     </div>
                                                                     
                                                                     <div class="form-floating mb-3">
-                                                                        <input type="text" class="form-control" name="country" id="floatingInputCountry" placeholder="Country">
-                                                                        <label for="floatingInputCountry" style="color: black;"><i class="fa fa-map-marker" style="margin-right: 10px; color: black;" ></i> Country</label>
+                                                                        <input type="text" class="form-control" name="country" id="floatingInputCountry" placeholder="Country" value="{{userDetails.country}}">
+                                                                        <label for="floatingInputCountry" style="color: black;"><i class="fa fa-map-marker" style="margin-right: 10px; color: black;"  ></i>  Country</label>
                                                                     </div>
-                                                                    <div class="form-floating mb-3">
-                                                                        <input type="file" class="form-control" name="profile_pic" id="floatingInputPPic" placeholder="Profile Pic" accept="image/*" onchange="showPreview(event);">
-                                                                        <label for="floatingInputPPic" style="color: black;"><i class="fa fa-picture-o" style="margin-right: 10px; color: black;" ></i> Profile Picture</label>
+                                                                    <div class="input-group mb-3" style="height: 60px;">
+                                                                        <label for="floatingInputPPic" class="input-group-text" style="color: black;"><i class="fa fa-picture-o" style="margin-right: 10px; color: black;"  ></i>Profile Picture</label>
+                                                                        <input type="file" class="form-control p-3" name="profile_pic" id="floatingInputPPic" accept="image/*" onchange="showPreview(event);">
                                                                     </div>
                                                     
                                                                     <div class="form-floating mb-3">
-                                                                        <textarea class="form-control" name="about" id="floatingInputAbout" rows="4" cols="40" placeholder="About You"></textarea>
+                                                                        <textarea class="form-control" name="about" id="floatingInputAbout" rows="4" cols="40" placeholder="About You" >{{userDetails.bio}}</textarea>
                                                                         <label for="floatingInputAbout" style="color: black;"><i class="fa fa-info-circle" style="margin-right: 10px; color: black;" ></i> About You</label>
                                                                     </div>
                                                                     <div class="mt-5 text-right">
-                                                                        <button class="btn btn-warning" type="button">Save Profile</button>
+                                                                        <button class="btn btn-warning" type="button" onclick="updateProfile()">Save Profile</button>
                                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                                     </div>
                                                                 </div>
@@ -185,7 +189,7 @@
 					<div class="card" data-toggle="modal" data-target="#myModal5" style="background-color: #252e38">
 						<div class="card-body" style="height: 90px">
 							<h4 style="color: #fcdf18">ABOUT ME</h4>
-							<p class="card-text">Introduce yourself</p>
+							<p class="card-text">{{ userDetails.bio }}</p>
 						</div>
 					</div>
 				</li>
@@ -194,7 +198,7 @@
 					<div class="card" style="background-color: #252e38">
 						<div class="card-body" style="height: 90px">
 							<h4 style="color: #fcdf18">PROGRAMMING LANGUAGES</h4>
-							<p class="card-text">No programing languages used yet</p>
+							<p class="card-text">{{userDetails.programming_languages}}</p>
 						</div>
 					</div>
 				</li>
@@ -202,7 +206,7 @@
 					<div class="card" style="background-color: #252e38">
 						<div class="card-body" style="height: 90px">
 							<h4 style="color: #fcdf18">SKILLS</h4>
-							<p class="card-text">No skills learned yet</p>
+							<p class="card-text">{{userDetails.skills}}</p>
 						</div>
 					</div>
 				</li>
@@ -219,7 +223,7 @@
                                 <span class="fas fa-stack-2x"><img src="{% static 'assets/img/icon/star.png' %}" alt="star" height="70" width="70"></span>
                                 <!-- a strong element with the custom content, in this case a number -->
                                 <strong class="fa-stack-1x " style="color: goldenrod; margin-top: 15px; margin-left: 13px;">
-                                    <b>1</b>
+                                    <b>{{userDetails.rank_star}}</b>
                                 </strong>
                             </span>
                             <b style=" margin-left: 30px; font-family: monospace;">Level </b></p>
@@ -240,6 +244,36 @@
         </div>
     </div>
 <script>
+
+function updateProfile()
+{
+    about = document.getElementById('floatingInputAbout').value;
+    company = document.getElementById('floatingInputCompany').value;
+    education = document.getElementById('floatingInputUniversity').value;
+    programming_languages = document.getElementById('floatingInputPL').value;
+    skills = document.getElementById('floatingInputSkills').value;
+    country = document.getElementById('floatingInputCountry').value;
+
+    $.ajax({
+        url: 'update_profile',
+        type: 'POST',
+        data: {
+            'about': about,
+            'company': company,
+            'education': education,
+            'programming_languages': programming_languages,
+            'skills': skills,
+            'country': country,
+            csrfmiddlewaretoken: "{{ csrf_token }}",
+        },
+        success: function(data)
+        {
+            location.reload();
+        }
+    });
+}
+
+
 function showPreview(event){
   if(event.target.files.length > 0){
     var src = URL.createObjectURL(event.target.files[0]);

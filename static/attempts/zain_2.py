@@ -5,6 +5,12 @@ snakeX, snakeY, fruitX, fruitY = map(int,input().split(','))
 # You have access to the following variables:
 # snakeX, snakeY, fruitX, fruitY
 # Write your code here
-for i in range(10):
-	print(1)
-	print(0)
+for i in range(200):
+	if snakeX>fruitX:
+		print(0)
+		snakeX-=1
+	elif snakeX==fruitX:
+		print(2)
+	elif snakeX<fruitX:
+		print(0)
+		snakeX+=1

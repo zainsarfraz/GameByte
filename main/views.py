@@ -135,7 +135,8 @@ def problems(request):
 
 def user_profile(request):
     if request.user.is_authenticated:
-        return render(request,'user_profile.html')
+        userDetails = UserDetails.objects.get(user_id=request.user.id)
+        return render(request,'user_profile.html',{'userDetails':userDetails})
     else:
         return redirect('/auth/login')
 
@@ -218,3 +219,23 @@ def submitcode(request):
         submission = Submission(user_id=request.user,problem_id=problem,submission_code=code,submission_language='python')
         submission.save()
         return JsonResponse({'result':'success'})
+
+def update_profile(request):
+    if request.user.is_authenticated:
+        about = request.POST.get('about', None)
+        company = request.POST.get('company', None)
+        education = request.POST.get('education', None)
+        programming_language = request.POST.get('programming_languages', None)
+        skills =    request.POST.get('skills', None)
+        country = request.POST.get('country', None)
+        user_details = UserDetails.objects.get(user_id=request.user)
+        user_details.bio = about
+        user_details.company = company
+        user_details.education = education
+        user_details.programming_languages = programming_language
+        user_details.skills = skills
+        user_details.country = country
+        user_details.save()
+        return JsonResponse({'result':'success'})
+    else:
+        return redirect('/auth/login')

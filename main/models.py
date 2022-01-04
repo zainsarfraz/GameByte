@@ -11,6 +11,9 @@ class UserDetails(models.Model):
     education = models.CharField(max_length=100,default="N/A")
     rank_star = models.IntegerField(default=0)
     user_id = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    programming_languages = models.CharField(max_length=100,default="N/A")
+    skills = models.CharField(max_length=100,default="N/A")
+    country = models.CharField(max_length=100,default="N/A")
 
     def __str__(self) -> str:
         return self.user_id.email
