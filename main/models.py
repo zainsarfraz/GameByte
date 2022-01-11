@@ -22,6 +22,7 @@ class UserDetails(models.Model):
 class Problem(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=1000)
+    descriptionImage = models.CharField(max_length=1000,default="")
     category = models.CharField(max_length=100)
     difficulty = models.IntegerField(default=1)
     templateSolutionCode = models.CharField(max_length=1000,default="")

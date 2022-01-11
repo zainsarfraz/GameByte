@@ -117,6 +117,9 @@ filter: blur(2px)
             <div class="col-12 vertical-scrollable " style="height: 200px; background-color: #252e38;padding: 10px">
                 <h3 style="font-family:monospace;color:#fcdf18;font-size:25px"><b style="font-weight: 900;" >{{problem.title}}</b>
                 </h3>
+                {% if problem.descriptionImage %}
+                <img src="{% static problem.descriptionImage %}" style="height: 200px;width: 80%;"><br>
+                {% endif %}
                 <span id="problem-description" style="font-family:monospace; font-size: 13px;color: darkgray;" ></span>
                 
             </div>
