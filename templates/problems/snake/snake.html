@@ -1,6 +1,6 @@
 <style>
   #canvas {
-    background: #9c9;
+    background: #ecf542;
     width: 450px;
     height: 300px;
     display: block;
@@ -36,8 +36,10 @@
   }
 
   function init() {
-    //plan = [0,0,0,0,2,0,0,0,0,1,0,0,1,0,0,1,0,0,2,0,0]
+
+    // this variable controls the loop of the game
     running = true;
+    // this variable is to loop through the plan
     index = 0;
 
     var ctx;
@@ -52,19 +54,22 @@
 
     var MR = Math.random;
 
+    // initial random snake position
     var X = (5 + MR() * (45 - 10)) | 0;
     var Y = (5 + MR() * (30 - 10)) | 0;
-  
+
     snakeXGlobal = X;
     snakeYGlobal = Y;
 
-    //var direction = (MR() * 3) | 0;
+    // initial direction is always 0
     var direction = 0;
 
     var interval = 0;
 
     var score = 0;
     var inc_score = 50;
+
+    var myScore = 0;
 
     var sum = 0,
       easy = 0;
@@ -74,8 +79,6 @@
     var win = window;
     var doc = document;
 
-    //    var link = doc.createElement('p');
-    //    link.innerHTML = 'The source can be found <a href="https://github.com/infusion/HTML5-Experiments/blob/master/html5-snake.html">here</a>';
     var canvas = doc.getElementById("canvas");
     var setInt = win.setInterval;
     var clInt = win.clearInterval;
@@ -88,16 +91,19 @@
     canvas.setAttribute("height", 30 * 10);
 
     ctx = canvas.getContext("2d");
+    ctx.font = "10px sans-serif";
+    ctx.fillStyle = "black";
+    ctx.fillText("Score = "+score, 5, 10);
 
-    //doc.body.appendChild(canvas);
-    //doc.body.appendChild(link);
-
-    function placeFood() {
+  
+  
+    function placeFood(first=true) {
       var x, y;
 
       do {
         x = (MR() * 45) | 0;
         y = (MR() * 30) | 0;
+        
         fruitXGlobal = x;
         fruitYGlobal = y;
       } while (map[x][y]);
@@ -105,17 +111,24 @@
       map[x][y] = 1;
       ctx.strokeRect(x * 10 + 1, y * 10 + 1, 10 - 2, 10 - 2);
     }
+
+    // this variable decides wether to stop game or wait for new plan
+    var needNewPlan = false;
     function clock() {
-
-      
-
       if (!running) {
         return;
       }
       if (index < plan.length) {
+        needNewPlan =false;
         move(plan[index]);
         index++;
       } else {
+        if (needNewPlan)
+        {
+          // if we waiting for new plan then dont stop game
+          return;
+        }
+        // if we are not waiting for new plan then stop game
         running = false;
         loading.style.display = "none";
         testcasebtn.disabled = false;
@@ -140,10 +153,20 @@
 
       if ((easy || (0 <= X && 0 <= Y && X < 45 && Y < 30)) && 2 !== map[X][Y]) {
         if (1 === map[X][Y]) {
+
+          // this code runs if snake capture food
           score += Math.max(5, inc_score);
           inc_score = 50;
+          // reseting plan
+          plan = [];
+          index = 0;
+          // wait for new plan
+          needNewPlan = true;
           placeFood();
+          getPlan(false);
+
           elements++;
+          
         }
 
         ctx.fillRect(X * 10, Y * 10, 10 - 1, 10 - 1);
@@ -161,39 +184,16 @@
           ctx.clearRect(dir[0] * 10, dir[1] * 10, 10, 10);
         }
       } else if (!turn.length) {
+
+        // this is where the snake crash and we reset the game
         loading.style.display = "none";
         testcasebtn.disabled = false;
         submitbtn.disabled = false;
-        if (0) {
-          ctx.clearRect(0, 0, 450, 300);
-          queue = [];
-
-          elements = 1;
-          map = [];
-
-          X = (5 + MR() * (45 - 10)) | 0;
-          Y = (5 + MR() * (30 - 10)) | 0;
-
-          direction = (MR() * 3) | 0;
-
-          score = 0;
-          inc_score = 50;
-
-          for (i = 0; i < 45; i++) {
-            map[i] = [];
-          }
-
-          placeFood();
-        } else {
-          clInt(interval);
-          //window.location = "/projects/";
-        }
+        clInt(interval);
       }
     }
 
-
     function move(code) {
-      //console.log(code,direction);
       if (code == 0) return;
       else {
         if (code == 1 && direction == 0) {
@@ -249,38 +249,36 @@
       }
       // Movement of snake on arrow keys
 
-    // doc.onkeydown = function (e) {
-    //   var code = e.keyCode - 37;
+      // doc.onkeydown = function (e) {
+      //   var code = e.keyCode - 37;
 
-    //   /*
-    //    * 0: left
-    //    * 1: up
-    //    * 2: right
-    //    * 3: down
-    //    **/
-    //   if (0 <= code && code < 4 && code !== turn[0]) {
-    //     turn.unshift(code);
-    //   } else if (-5 == code) {
-    //     if (interval) {
-    //       clInt(interval);
-    //       interval = 0;
-    //     } else {
-    //       interval = setInt(clock, 120);
-    //     }
-    //   } else {
-    //     // O.o
-    //     dir = sum + code;
-    //     if (dir == 44 || dir == 94 || dir == 126 || dir == 171) {
-    //       sum += code;
-    //     } else if (dir === 218) easy = 1;
-    //   }
-    // };
+      //   /*
+      //    * 0: left
+      //    * 1: up
+      //    * 2: right
+      //    * 3: down
+      //    **/
+      //   if (0 <= code && code < 4 && code !== turn[0]) {
+      //     turn.unshift(code);
+      //   } else if (-5 == code) {
+      //     if (interval) {
+      //       clInt(interval);
+      //       interval = 0;
+      //     } else {
+      //       interval = setInt(clock, 120);
+      //     }
+      //   } else {
+      //     // O.o
+      //     dir = sum + code;
+      //     if (dir == 44 || dir == 94 || dir == 126 || dir == 171) {
+      //       sum += code;
+      //     } else if (dir === 218) easy = 1;
+      //   }
+      // };
     }
-    placeFood();
-    console.log(snakeXGlobal,snakeYGlobal,fruitXGlobal,fruitYGlobal);
 
-    
-    $.ajax({
+    function getPlan(firstTime=true){
+      $.ajax({
       type: "POST",
       url: "{% url 'runtestcase' %}",
       data: {
@@ -295,21 +293,22 @@
         csrfmiddlewaretoken: "{{ csrf_token }}",
       },
       success: function (data) {
-        
-
-        if (data.status)
+        if (data.status) {
           document.getElementById("console-output").innerHTML = data.status;
-        else {
+        } else {
           if (data.error) {
+            // if there is error in the code snippet
+
             document.getElementById("console-output").style.color = "red";
             data.message = data.message.replaceAll("\n", "<br>");
             data.message = data.message.replaceAll("\r", "");
             document.getElementById("console-output").innerHTML =
               JSON.stringify(data.message);
-              loading.style.display = "none";
-        testcasebtn.disabled = false;
-        submitbtn.disabled = false;
+            loading.style.display = "none";
+            testcasebtn.disabled = false;
+            submitbtn.disabled = false;
           } else {
+            // if there is no error in the code snippet
             document.getElementById("console-output").style.color = "";
             data.result = data.result.replaceAll("\n", "<br>");
             data.result = data.result.replaceAll("\r", "");
@@ -323,28 +322,26 @@
               return parseInt(item, 10);
             });
 
-            console.log(plan)
-            for(var i = 0; i < plan.length; i++){
-              if(plan[i] == 0 || plan[i] == 1 || plan[i] == 2){
+            console.log(plan);
+            for (var i = 0; i < plan.length; i++) {
+              if (plan[i] == 0 || plan[i] == 1 || plan[i] == 2) {
                 continue;
-              }
-              else{
-                //plan.splice(i);
+              } else {
+                // remove i from plan
+                plan.splice(i, 1);
               }
             }
-            console.log(plan)
-            interval = setInt(clock, 120);
-            //init();
+            if (firstTime)
+            {interval = setInt(clock, 120);}
           }
         }
       },
     });
+    }
 
-
-
-
-
- 
-    
+    placeFood();
+    getPlan(true);
   }
+
+
 </script>
