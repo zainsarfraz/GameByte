@@ -1,0 +1,22 @@
+#particle {
+    background-color: #131c25;
+    position: relative;
+    
+    opacity: 1
+  }
+  
+  #jumbo{
+    background: rgba(252,223,24, .5);
+    color: rgba(255, 255, 255);
+    position: relative;
+    padding: 50px;
+  }
+  
+  .inner{
+    color:rgb(250,250,250);
+    opacity: 1;
+  }
+  
+  /* body{
+    padding-top: 75px;
+  } */

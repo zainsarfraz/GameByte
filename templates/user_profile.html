@@ -92,10 +92,32 @@
 
                 </div>
                 <div class="profile-img">
-                    <a href="#">
+                    <a href="#" data-toggle="modal" data-target="#myModalForPPic">
 
                         <img src="{% static 'assets/img/avatars/avatar-06.png' %}" alt="profilePic" title="">
+
                     </a>
+                    <div class="modal fade" id="myModalForPPic" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content" style="background-color: #252e38; color: #fcdf18;">
+                                <br>
+                                <div class="d-flex flex-row align-items-center back">
+                                    <h4 class="mt-1 ml-3">Upload Profile Photo</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="photo-input mt-5">
+                                         <input type="file" id="loadFilePP" onchange="console.log(this.files[0].name);" />
+                                            <button class="btn btn-sm btn-secondary" onclick="document.getElementById('loadFilePP').click()"> Select a file </button>
+                                    </div>
+                                </div>
+                                <div class="mt-5 text-right" style="margin: 5px;">
+                                    <button class="btn btn-warning" type="button">Set Profile</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="profile-name" style="margin-bottom: 15px">
@@ -154,10 +176,10 @@
                                                                         <input type="text" class="form-control" name="country" id="floatingInputCountry" placeholder="Country" value="{{userDetails.country}}">
                                                                         <label for="floatingInputCountry" style="color: black;"><i class="fa fa-map-marker" style="margin-right: 10px; color: black;"  ></i>  Country</label>
                                                                     </div>
-                                                                    <div class="input-group mb-3" style="height: 60px;">
+                                                                    {% comment %} <div class="input-group mb-3" style="height: 60px;">
                                                                         <label for="floatingInputPPic" class="input-group-text" style="color: black;"><i class="fa fa-picture-o" style="margin-right: 10px; color: black;"  ></i>Profile Picture</label>
                                                                         <input type="file" class="form-control p-3" name="profile_pic" id="floatingInputPPic" accept="image/*" onchange="showPreview(event);">
-                                                                    </div>
+                                                                    </div> {% endcomment %}
                                                     
                                                                     <div class="form-floating mb-3">
                                                                         <textarea class="form-control" name="about" id="floatingInputAbout" rows="4" cols="40" placeholder="About You" >{{userDetails.bio}}</textarea>
@@ -274,14 +296,14 @@ function updateProfile()
 }
 
 
-function showPreview(event){
+{% comment %} function showPreview(event){
   if(event.target.files.length > 0){
     var src = URL.createObjectURL(event.target.files[0]);
     var preview = document.getElementById("img-preview");
     preview.src = src;
     preview.style.display = "block";
   }
-}
+} {% endcomment %}
 </script>
 
 {% endblock %}

@@ -1,23 +1,36 @@
 {% extends "base.html" %}
 
+
 {% block title %}
 GameByte - Problems
 {% endblock %}
 
+
 {% block body %}
-    <div class="container" style="margin-top: 40px;">
+
+<div id="particle">
+    <div class="container"  style="margin-top: 40px;">
     <h1>All Problems</h1>
     {% for problem in problems %}
 
         <div class="row">
-            <div class="col-md-4">
+            {% comment %} <div class="col-md-4">
                 <h4>{{problem.title}}</h4>
             </div>
             <div class="col-md-4">
                 <a href="playground/{{problem.id}}" class="btn btn-primary">Solve</a>
+            </div> {% endcomment %}
+            <div class="jumbotron" id="jumbo">
+                <div class="inner">
+                    <h1 class="whitney">{{ problem.title}}</h1>
+                        <p>Using bootstrap's jumbotron with the particle.js background to make the jumbotron semi-transparent.</p>
+                        <p><a href="playground/{{problem.id}}" class="btn btn-dark btn-lg" role="button">Play &raquo;</a></p>
+                </div>
             </div>
         </div>
-        <hr>
+       
+        
     {% endfor %}
+</div>
 </div>
 {% endblock %}

@@ -221,6 +221,10 @@ b{
   display: none
 }
 
+#loadFilePP {
+  display: none
+}
+
 .modal-header>.modal-title,
 .modal-body>.body-desc,
 .modal-body>.photo-input,
