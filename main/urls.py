@@ -21,4 +21,7 @@ urlpatterns = [
     path('about',about,name='about'),
     path('submitcode',submitcode,name='submitcode'),
     path('update_profile',update_profile,name='update_profile'),
+    path('submissions',submissions,name='submissions'),
+    path('downloadCode/<int:id>',downloadCode,name='downloadCode'),
+    path('runCode/<int:id>',runCode,name='runCode'),
 ]

@@ -113,6 +113,19 @@ def playground(request,id):
         f = open('templates/'+problem.templateSolutionCode,'r')
         templateSolutionCode = f.read()
         #print(templateSolutionCode)
+        # check for a query parameter
+        try:
+            if request.GET['submission_id'] is not None:
+                submission = Submission.objects.get(id=request.GET['submission_id'])
+                # read submission file 
+                filename = 'static/attempts/'+submission.user_id.username+'_'+str(submission.id)+'.py'
+                file = open(filename,'r')
+                code = file.read()
+                file.close()
+                return render(request,'playground.html',{'problem':problem,'templateSolutionCode':code})
+        except Exception as e:
+            print(e)
+            
         return render(request,'playground.html',{'problem':problem,'templateSolutionCode':templateSolutionCode})
     else:
         return redirect('/auth/login')
@@ -218,6 +231,15 @@ def submitcode(request):
         problem = Problem.objects.get(id=problem_id)
         submission = Submission(user_id=request.user,problem_id=problem,submission_code=code,submission_language='python')
         submission.save()
+        # get the submission id
+        submission_id = submission.id
+        # make code file and save in server
+        filename = 'static/attempts/'+request.user.username+'_'+str(submission_id)+'.py'
+        file = open(filename,'w')
+        for i in code:
+            file.write(str(i))
+        file.close()
+        
         return JsonResponse({'result':'success'})
 
 def update_profile(request):
@@ -239,3 +261,26 @@ def update_profile(request):
         return JsonResponse({'result':'success'})
     else:
         return redirect('/auth/login')
+
+
+def submissions(request):
+    if request.user.is_authenticated:
+        submissions = Submission.objects.all()
+        # sort by date
+        submissions = sorted(submissions, key=lambda x: x.submission_time, reverse=True)
+        return render(request,'submissions.html',{'submissions':submissions})
+
+def downloadCode(request,id):
+    if request.user.is_authenticated:
+        submission = Submission.objects.get(id=id)
+        filename = 'static/attempts/'+submission.user_id.username+'_'+str(submission.id)+'.py'
+        file = open(filename,'r')
+        code = file.read()
+        file.close()
+        response = HttpResponse(code, content_type='text/plain')
+        response['Content-Disposition'] = 'attachment; filename=code.py'
+        return response
+
+def runCode(request,id):
+    submission = Submission.objects.get(id=id)
+    return redirect('/playground/'+str(submission.problem_id.id)+'?submission_id='+str(submission.id))

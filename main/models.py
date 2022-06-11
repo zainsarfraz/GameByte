@@ -19,6 +19,8 @@ class UserDetails(models.Model):
         return self.user_id.email
 
 
+
+
 class Problem(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=1000)
