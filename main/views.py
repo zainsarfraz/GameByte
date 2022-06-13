@@ -133,7 +133,9 @@ def playground(request,id):
 def dashboard(request):
     if request.user.is_authenticated:
         problems = Problem.objects.all()
-        return render(request,'dashboard.html',{'problems':problems})
+        submissions = Submission.objects.filter(user_id=request.user.id)
+        print(submissions)
+        return render(request,'dashboard.html',{'problems':problems,'submissions':submissions})
         
     else:
         return redirect('/auth/login')

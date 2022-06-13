@@ -5,13 +5,13 @@ GameByte
 {% endblock %}
 
 {% block body %}
-
+<div id="particle">
     
-    <div class="container " style="margin-top: 40px;">
-        <h1>Dashboard</h1>
-    {{user.first_name}} {{user.last_name}}
+    <div class="container " style="margin-top: 40px;position:absolute;" >
+        <h1>Welcome back {{user.first_name}} {{user.last_name}}</h1>
+    How's your coding practice going?
     <br><br><br>
         <a class="btn btn-primary" href="problems">See All Problems</a>
     </div>
-
+</div>
 {% endblock %}
